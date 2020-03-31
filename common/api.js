@@ -6,7 +6,7 @@ export default {
 	// ESURI: 'http://localhost:8081/api/',
 	// BASEURI:'http://101.132.195.75:8081/api/',
 	// ESURI: 'http://101.132.195.75:8081/api/',
-	BASEURI:'http://localhost:8081/api/',
+	BASEURI:'http://api.iele.co/api/api/',
 	ESURI: 'http://192.168.1.169:8081/api/',
 	h5Appid: 'wxb4660f37187c0b8e',
 
