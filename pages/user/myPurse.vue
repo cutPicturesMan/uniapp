@@ -76,6 +76,7 @@
 </template>
 
 <script>
+import Api from '@/common/api';
 	import uniIcon from "@/components/uni-icon/uni-icon.vue"
 	import fns from '@/components/eonfox/fns.js';
 	import eonfox from '@/components/eonfox/eonfox.js';
@@ -106,36 +107,7 @@
 			})
 			this.moneyQuery();
 			var that=this;
-			ef.submit({
-					request: {
-						u:['USERSELFCONFIGALIPAY'],
-						balance:['MERCHANTMONEYSELF'],
-					},
-					callback: function(data){
-						console.log("用户支付宝信息",data);
-						var ulist=fns.checkError(data,'u',function(errno,error){
-							 uni.showToast({
-							 	title:error,
-								icon:'none'
-							 })
-						})
-						if(ulist.balance){
-							that.balance=ulist.balance
-						}
-						console.log("ulist.u",ulist.u.account);
-						if(ulist.u.account){
-							that.ID=ulist.u.account;
-							that.name=ulist.u.realname;
-							that.isAuth=true
-						}
-					
-						console.log('ID',that.ID);
-						console.log('name',that.name);
-					},
-					 error: function(err){
-							 console.log("出错啦", err);
-					},
-				});
+
 		},
 		methods:{
 			goDetail(){
@@ -304,26 +276,14 @@
 				})
 				
 			},
-			moneyQuery(){
+			async moneyQuery(){
 				var _this=this
-				ef.submit({
-					request:{s:['USERMONEYSELFEARNING']},
-					callback(data){
-						console.log('我的预付款查询结果·',data);
-						var re=fns.checkError(data,'s',function(errno,error){
-							uni.showToast({
-								title:error
-							})
-						})
-						console.log('filter',re);
-						if(re){
-							_this.money=re.s
-						}
-					},
-					error(err){
-						fns.err('接口调用失败',err)
-					}
-				})
+
+                				 let params = {  };
+                                            				let data1 = await Api.apiCall('get', Api.member.currentMember, params);
+                                					_this.money = data1.blance;
+
+
 			},
 			xz(fun){
 				var that=this;

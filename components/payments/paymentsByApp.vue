@@ -3,7 +3,10 @@
 
 		<view class="type-item b-b" v-for="item in paymentss" :key="item.code" @click="toPayHandler(item.code)"
 			  v-if="!(type == 2 && item.code == 'balancepay')">
-			<text class="icon yticon icon-weixinzhifu"></text>
+			<text v-if=" item.code == 'wechatpay'" class="icon yticon icon-weixinzhifu"></text>
+			<text v-if=" item.code == 'alipay'" class="icon yticon icon-alipay"></text>
+			<text v-if=" item.code == 'offline'" class="icon yticon icon-weixinzhifu"></text>
+			<text v-if=" item.code == 'balancepay'" class="icon yticon icon-erjiye-yucunkuan"></text>
 
 			<view class="con">
 				<text class="tit">{{ item.name }}</text>

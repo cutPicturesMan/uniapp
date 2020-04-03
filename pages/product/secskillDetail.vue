@@ -44,38 +44,8 @@
 				<text class="con t-r red">领取优惠券</text>
 				<text class="yticon icon-you"></text>
 			</view>
-			<view class="c-row b-b" v-if="basicMarkingList && basicMarkingList.length > 0" >
-				<text class="tit">满减折扣</text>
-				<view class="hot-floor" v-if="item1.actrule && item1.actrule.length > 0" v-for="(item1, index1) in basicMarkingList" :key="index1">
-					<view class="floor-img-box"> <text class="name">{{ item1.name }}</text></view>
 
-					<scroll-view class="floor-list" scroll-x>
-						<view>
-							<view v-for="(item, index) in item1.actrule" :key="index" class="floor-item" >
-								<text class="title clamp" v-if="item1.smallType==1">满{{item.fullPrice }}可减{{item.reducePrice }}</text>
-								<text class="title clamp" v-else>满{{item.fullPrice }} 件{{item.reducePrice }}折</text>
 
-							</view>
-						</view>
-					</scroll-view>
-				</view>
-			</view>
-			<view class="c-row b-b" v-if="basicGiftsList && basicGiftsList.length > 0">
-				<text class="tit">赠品活动</text>
-				<view class="hot-floor" v-if="item1.giftsList && item1.giftsList.length > 0" v-for="(item1, index1) in basicGiftsList" :key="index1">
-					<view class="floor-img-box"> <text class="name">{{ item1.name }}</text></view>
-
-					<scroll-view class="floor-list" scroll-x>
-						<view class="scoll-wrapper">
-							<view v-for="(item, index) in item1.giftsList" :key="index" class="floor-item" >
-								<image :src="item.pic" mode="aspectFill"></image>
-								<text class="title clamp">{{ item.name }}</text>
-								<text class="price" v-if="item.rule">￥{{ item.price }}</text>
-							</view>
-						</view>
-					</scroll-view>
-				</view>
-			</view>
 			<view class="c-row b-b">
 				<text class="tit">服务</text>
 				<view class="bz-list con">
@@ -108,7 +78,7 @@
 					<text class="con">{{ item.consultContent }}</text>
 					<view class="bot">
 						<text class="attr">购买类型：{{ item.attr }}</text>
-						<text class="time">{{ item.consultAddtime }}</text>
+						<text class="time">{{ item.consultAddtime | formatCreateTime}}</text>
 					</view>
 				</view>
 			</view>
@@ -146,7 +116,7 @@
 					<view class="con">
 						<view class="left">
 							<text class="title">{{item.name}}</text>
-							<text  class="time">在{{item.endTime}}前有效。 可领{{item.perLimit}}张</text>
+							<text  class="time">在{{item.endTime | formatCreateTime}}前有效。 可领{{item.perLimit}}张</text>
 
 						</view>
 						<view class="right">
@@ -259,10 +229,7 @@ export default {
             let couponList1 = await Api.apiCall('get', Api.index.couponList, params3);
             this.couponList = couponList1;
 
-			let params4 = { id: ops.id};
-			let mapData = await Api.apiCall('get', Api.goods.goodsPromoto, params4);
-			this.basicMarkingList = mapData.basicMarkingList;
-			this.basicGiftsList = mapData.basicGiftsList;
+
 		}
 
 

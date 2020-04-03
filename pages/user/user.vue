@@ -64,11 +64,11 @@
 			<image class="arc" src="/static/arc.png"></image>
 
 			<view class="tj-sction">
-				<view class="tj-item" @click="toNav('/pages/user/balance')">
+				<view class="tj-item" @click="toNav('/pages/user/deposit')">
 					<text class="num">{{ userDetailInfo.blance || 0 }}</text>
 					<text>余额</text>
 				</view>
-				<view class="tj-item" @click="toNav('/pages/search/coupon')">
+				<view class="tj-item" @click="toNav('/pages/user/coupon')">
 					<text class="num">{{ couponList.length || 0 }}</text>
 					<text>优惠券</text>
 				</view>
@@ -91,7 +91,7 @@
 					<text class="yticon icon-yishouhuo"></text>
 					<text>待收货</text>
 				</view>
-				<view class="order-item" @click="navTo('/pages/order/order?status=4')" hover-class="common-hover" :hover-stay-time="50">
+				<view class="order-item" @click="navTo('../../pagesA/after_sale/list')" hover-class="common-hover" :hover-stay-time="50">
 					<text class="yticon icon-shouhoutuikuan"></text>
 					<text>退款/售后</text>
 				</view>
@@ -111,27 +111,38 @@
 				<!--<list-cell icon="icon-share" iconColor="#9789f7" title="分享" tips="邀请好友赢10万大礼"></list-cell>
 				<list-cell icon="icon-pinglun-copy" iconColor="#ee883b" title="晒单" tips="晒单抢红包"></list-cell>-->
 				<list-cell icon="icon-shoucang_xuanzhongzhuangtai" iconColor="#54b4ef" title="我的收藏" @eventClick="navTo('/pages/user/collect')"></list-cell>
-				<list-cell icon="icon-userShare cgtt" iconColor="#6cd70e" title="推广地址" @eventClick="navTo('/pages/user/share')"></list-cell>
-				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" title="商户入驻" @eventClick="navTo('/pages/store/applyBusiness')"></list-cell>
+
+				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" v-if="!userDetailInfo.roomNums" title="绑定社区" @eventClick="navTo('../../pagesA/build/bindCommunity')"></list-cell>
+				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" v-if="userDetailInfo.roomNums" title="社区主页" @eventClick="navTo('../../pagesA/build/community')"></list-cell>
+					<list-cell icon="icon-pinglun-copy" iconColor="#0e68d7" title="我的邀请码" :tips="userDetailInfo.id"  @eventClick="navTo('/pages/user/invite')"></list-cell>
+					<list-cell icon="icon-pinglun-copy" iconColor="#0e68d7" v-if="!userDetailInfo.invitecode" title="推荐邀请码" @eventClick="inputShowModal('invitecode')"></list-cell>
 				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="系统设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>
 				<!-- <list-cell icon="icon-shezhi1" iconColor="#e07472" title="test" border="" @eventClick="navTo('/pages/search/test')"></list-cell> -->
 			</view>
 		</view>
+		<neil-modal :show="inputShow" @close="cancel" title="编辑" @cancel="cancel" @confirm="confirm">
+        				<input v-model="inputContent" style="margin:20upx" placeholder="请输入..." />
+        			</neil-modal>
 	</view>
 </template>
 <script>
 import Api from '@/common/api';
 import listCell from '@/components/mix-list-cell';
+import neilModal from '@/components/neil-modal.vue';
 import { mapState } from 'vuex';
 let startY = 0,
 	moveY = 0,
 	pageAtTop = true;
 export default {
+
 	components: {
-		listCell
+		listCell,neilModal
 	},
 	data() {
 		return {
+			inputShow: false,
+        			feild: undefined,
+        			inputContent: '',
 			coverTransform: 'translateY(0px)',
 			coverTransition: '0s',
 			moving: false,
@@ -144,18 +155,14 @@ export default {
 			viewList: []
 		};
 	},
+
+	async onLoad() {
+    		this.getData()
+
+    	},
 	async onShow() {
 		this.getData()
-		// if (this.hasLogin) {
-		// 	let params = { memberId: this.userInfo.userInfo.id };
-		// 	let data = await Api.apiCall('get', Api.goods.viewList, params);
-		// 	this.viewList = data.result;
 
-		// 	let data1 = await Api.apiCall('get', Api.index.userInfo, params);
-		// 	this.userDetailInfo = data1.member;
-		// 	let couponList = data1.histories;
-		// 	this.couponList = couponList;
-		// }
 	},
 
 	// #ifndef MP
@@ -187,29 +194,54 @@ export default {
 		}
 	},
 	methods: {
+inputShowModal(feild) {
+			this.feild = feild;
+			this.inputShow = true;
+			this.inputContent = '';
+		},
+    		cancel() {
+            			this.inputShow = false;
+
+            		},
+
+            		confirm() {
+            			const that = this;
+            			if (!that.inputContent) {
+            				that.$api.msg('输入不能为空');
+            				return;
+            			}
+            			let obj = {	id:this.userDetailInfo.id};
+            			obj[that.feild] = that.inputContent;
+            			Api.apiCall('post', Api.member.updateMember, obj);
+            			that.$api.msg('修改成功');
+            			that.userInfos[that.feild] = that.inputContent
+
+            		},
 		async getData(){
 			this.getuserinfo();
 			this.getHistory();
 		},
 		// 获取用户信息
 		async getuserinfo(){
-			if (this.hasLogin) {
-				let params = { memberId: this.userInfo.userInfo.id };
+
+				let params = {  };
 				let data1 = await Api.apiCall('get', Api.index.userInfo, params);
 				this.userDetailInfo = data1.member;
+				uni.setStorageSync('userInfos', data1.member);
+				console.log(this.userDetailInfo)
 				let couponList = data1.histories;
 				this.couponList = couponList;
-			}
+
 		},
 		// 获取浏览历史
 		async getHistory(){
 			if(this.hasLogin){
-				let params = { memberId: this.userInfo.userInfo.id };
+				let params = {  };
 				let data = await Api.apiCall('get', Api.goods.viewList, params);
 				this.viewList = data.result;
 			}
 		},
-		
+
 		toNav(url){
 			uni.navigateTo({
 				url: url
@@ -220,13 +252,13 @@ export default {
 				url: '/pages/user/profile'
 			});
 		},
-		
+
 		toWeChatLogin(){
 			uni.navigateTo({
 				url: '/pages/public/login',
 			});
 		},
-		
+
 		//详情页
 		navToDetailPage(item) {
 			//测试数据没有写id，用title代替
@@ -362,7 +394,7 @@ export default {
 			this.$api.login1(data, res => {
 				if (res.status) {
 					this.open_id = res.data;
-					
+
 					this.getUserInfo()
 				} else {
 					this.$common.errorToShow(res.msg, function() {
@@ -476,15 +508,15 @@ page{
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 	}
-	
+
 	.icon-userShare:before {
 		content: "\c600";
 	}
-	
+
 	.icon-userJoin:before {
 		content: "\c601";
-	}	
-	
+	}
+
 %flex-center {
 	display: flex;
 	flex-direction: column;

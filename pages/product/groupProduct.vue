@@ -12,8 +12,8 @@
 			<text class="title">{{ goods.name }}</text>
 			<view class="price-box">
 				<text class="price-tip">¥</text>
-				<text class="price">{{ goods.price }}</text>
-				<text class="m-price">¥{{ goods.originalPrice }}</text>
+				<text class="price">{{ group.groupPrice }}</text>
+				<text class="m-price">¥{{ goods.price }}</text>
 			</view>
 			<view class="bot-row">
 				<text>销量: {{ goods.sale }}</text>
@@ -85,7 +85,7 @@
 					<text class="con">{{ item.consultContent }}</text>
 					<view class="bot">
 						<text class="attr">购买类型：{{ item.attr }}</text>
-						<text class="time">{{ item.consultAddtime }}</text>
+						<text class="time">{{ item.consultAddtime | formatCreateTime}}</text>
 					</view>
 				</view>
 			</view>
@@ -153,6 +153,8 @@
 <script>
 import Api from '@/common/api';
 import share from '@/components/share';
+	import { formatDate } from '@/common/date';
+
 import { mapState } from 'vuex';
 export default {
 	components: {
@@ -327,6 +329,12 @@ export default {
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},
+	filters: {
+                  formatCreateTime(time) {
+                    let date = new Date(time);
+                    return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+                  },
+                },
 	methods: {
 		toTimeStamp(strtime) {
 			var strtime = index;

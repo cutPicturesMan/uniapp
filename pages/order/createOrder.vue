@@ -124,7 +124,7 @@
                     <view class="con" @click="selectCoupon(item)">
                         <view class="left">
                             <text class="title">{{ item.name }}</text>
-                            <text class="time">有效期至{{item.coupon.endTime}}</text>
+                            <text class="time">有效期至{{item.coupon.endTime | formatCreateTime}}</text>
                         </view>
                         <view class="right">
                             <text class="price">{{ item.coupon.amount }}</text>
@@ -144,6 +144,8 @@
 <script>
     import Api from '@/common/api';
     import { mapState } from 'vuex';
+    	import { formatDate } from '@/common/date';
+
     export default {
         data() {
             return {
@@ -267,6 +269,12 @@
         computed: {
             ...mapState(['hasLogin', 'userInfo'])
         },
+        filters: {
+                      formatCreateTime(time) {
+                        let date = new Date(time);
+                        return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+                      },
+                    },
         methods: {
             selectCoupon(item){
                 this.coupon=item.coupon;

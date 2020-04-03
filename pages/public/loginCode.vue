@@ -40,6 +40,7 @@ export default {
 		return {
 			phone: '',
 			code: '',
+				logining: false,
 			coding: false,
 			auth_time: 60
 		};
@@ -74,7 +75,38 @@ export default {
 				url: '/pages/public/reg'
 			});
 		},
-
+async toLogin() {
+			var that = this;
+			let phoneReg = /^1[1-9][0-9]\d{8}$/;
+			try {
+				if (this.phone == '') {
+					throw '请填写手机号';
+				}
+				if (!phoneReg.test(this.phone)) {
+					throw '手机号格式有误';
+				}
+				if (this.code == '') {
+					throw '请填写密码';
+				}
+			} catch (err) {
+				this.$api.msg(err);
+				return;
+			}
+			this.logining = false;
+			let params = { phone: this.phone, authCode: this.code };
+			let data = await Api.apiCall('post', Api.index.loginByCode, params);
+			//this.logining = false;
+			if (data) {
+				console.log(data);
+				that.login(data)
+				uni.setStorageSync('userInfos', data.userInfo);
+				uni.setStorageSync('token', data.tokenHead + data.token);
+				console.log(uni.getStorageSync('token'))
+				uni.switchTab({
+					url: '/pages/user/user'
+				});
+			}
+		},
 		// 获取验证码
 		async getCode() {
 			var myreg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;

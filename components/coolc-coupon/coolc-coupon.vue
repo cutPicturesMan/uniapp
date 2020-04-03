@@ -1,21 +1,22 @@
 <template>
     <view class="coupon-item">
 		<view class="coupon-money">
-			<view class="nick" v-if="!types">{{item.seller_name}}使用</view>
-			<view class="layof" :style="{color:theme}">￥{{item.money}}</view>
-			<view class="end_time">{{item.end_time}}前使用</view>
-			<view v-if="!types">
-				<view class="demand">{{ item.title }}</view>
-				<!-- <view class="demand">满{{ item.minPoint }} 减 {{ item.amount }}</view> -->
+			<view class="nick" ></view>
+			<view class="layof" :style="{color:theme}">￥{{item.amount}}</view>
+			<view class="end_time">{{item.endTime | formatCreateTime}}前使用</view>
+			<view >
+				 <view class="demand">满{{ item.minPoint }} 减 {{ item.amount }}</view>
 			</view>
 		</view>
-		<view class="get-btn" v-if="types" :style="{color:color, borderColor:color, background:solid}" @click="acceptCoupon(goodsItem)" >选择使用</view>
-		<navigator class="get-btn" v-if="!types" :style="{color:color, borderColor:color, background:solid}" :url='item.url' @click="acceptCoupon(item)">立即使用</navigator>
+		<view class="get-btn" v-if="!types" :style="{color:color, borderColor:color, background:solid}" @click="acceptCoupon(item)" >立即领取</view>
+		<navigator class="get-btn" v-if="types" :style="{color:color, borderColor:color, background:solid}" :url='item.url' @click="acceptCoupon(item)">立即使用</navigator>
     </view>
 </template>
 
 <script>
 import Api from '@/common/api';
+import { formatDate } from '@/common/date';
+
 export default {
 	components:{
 
@@ -46,6 +47,12 @@ export default {
 			default: '#ff9000'
 		},
 	},
+	filters: {
+                  formatCreateTime(time) {
+                    let date = new Date(time);
+                    return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+                  },
+                },
 	methods: {
         async acceptCoupon(item){
 		       uni.showLoading({

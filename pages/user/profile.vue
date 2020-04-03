@@ -3,13 +3,13 @@
 			<view class="list-cell b-b m-t" @click="upImg" :hover-stay-time="50" style="display: flex;align-items: center;">
 				<text class="cell-tit">我的头像</text>
 				<view class="" style="display: flex;align-items: center;justify-content: center;height: 80upx;line-height: 80upx;">
-					<image :src="userInfo.icon" style="border-radius: 50%;width: 100upx;height: 100upx;"></image>
+					<image v-if="userInfos && userInfos.icon" :src="userInfos.icon" style="border-radius: 50%;width: 100upx;height: 100upx;"></image>
 					<text class="cell-more yticon icon-you"></text>
 				</view>
 			</view>
-			
+
 			<view class="list-cell b-b m-t" @click="inputShowModal('nickname')" hover-class="cell-hover" :hover-stay-time="50">
-				<text class="cell-tit">修改昵称</text>
+				<text class="cell-tit" v-if="userInfos && userInfos.nickname">修改昵称:{{userInfos.nickname|| ''}}</text>
 				<text class="cell-more yticon icon-you"></text>
 			</view>
 			<view class="list-cell b-b" @click="genderShowModal" hover-class="cell-hover" :hover-stay-time="50">
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+	import Api from '@/common/api';
 import neilModal from '@/components/neil-modal.vue';
 import { mapState, mapMutations } from 'vuex';
 export default {
@@ -48,31 +49,42 @@ export default {
 			genderShow: false,
 			gender: undefined,
 			genders: [{ name: '保密', value: 0 }, { name: '男', value: 1 }, { name: '女', value: 2 }],
-			
-			userInfo: '',
+
+			userInfos: {},
 			sourceTypeIndex: 0,
 			sourceType: ['拍照', '相册', '拍照或相册'],
 			sizeTypeIndex: 0,
 			sizeType: ['压缩', '原图', '压缩或原图'],
 		};
 	},
-	computed: {
-		...mapState(['userInfo'])
+	async onShow() {
+		 let params = {  };
+		 let data = await Api.apiCall('get', Api.index.userSampleInfo, params);
+		 this.userInfos=data;
+		 console.log(this.userInfos);
 	},
-	onLoad() {
-		this.userInfo = this.$db.get('userInfos')
+	async onLoad() {
+		let params = {  };
+		let data = await Api.apiCall('get', Api.index.userSampleInfo, params);
+		this.userInfos=data;
+		console.log(this.userInfos);
 	},
 	methods: {
 		upImg(){
-			uni.chooseImage({
-				sourceType: this.sourceType[this.sourceTypeIndex],
-				sizeType: this.sizeType[this.sizeTypeIndex],
-				count: 1,
-				success: (res) => {
-					console.log(res);
-					this.userInfo.avatar = res.tempFilePaths[0];
+			this.$otherApi.uploadFiles(res => {
+				if (res.code == 200) {
+					this.userInfos.icon = res.data;
+					let obj = {
+						id:1,
+						icon: res.data
+					};
+					Api.apiCall('post', Api.member.updateMember, obj);
+					that.$api.msg('修改成功');
+				} else {
+					this.$common.errorToShow(res.msg)
 				}
 			})
+
 		},
 		cancel() {
 			this.inputShow = false;
@@ -93,13 +105,12 @@ export default {
 				that.$api.msg('输入不能为空');
 				return;
 			}
-			let obj = {};
+			let obj = {	id:1};
 			obj[that.feild] = that.inputContent;
-			that.$api.request('user', 'syncUserInfo', obj).then(res => {
-				that.userInfo[that.feild] = that.inputContent;
-				that.inputContent = '';
-				that.$store.commit('login', that.userInfo);
-			});
+			Api.apiCall('post', Api.member.updateMember, obj);
+			that.$api.msg('修改成功');
+			that.userInfos[that.feild] = that.inputContent
+
 		},
 		genderRadioChange(e) {
 			this.gender = parseInt(e.detail.value);
@@ -111,11 +122,12 @@ export default {
 				return;
 			}
 			let obj = {
+				id:1,
 				gender: that.gender
 			};
-			that.$api.request('user', 'syncUserInfo', obj).then(res => {
-				that.userInfo.gender = that.gender;
-			});
+			Api.apiCall('post', Api.member.updateMember, obj);
+			that.$api.msg('修改成功');
+
 		}
 	}
 };

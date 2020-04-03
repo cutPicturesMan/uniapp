@@ -97,7 +97,7 @@
                     <view class="con" @click="selectCoupon(item)">
                         <view class="left">
                             <text class="title">{{ item.name }}</text>
-                            <text class="time">有效期至{{item.coupon.endTime}}</text>
+                            <text class="time">有效期至{{item.coupon.endTime | formatCreateTime}}</text>
                         </view>
                         <view class="right">
                             <text class="price">{{ item.coupon.amount }}</text>

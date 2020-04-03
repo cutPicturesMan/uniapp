@@ -94,7 +94,7 @@
 					<text class="con">{{ item.consultContent }}</text>
 					<view class="bot">
 						<text class="attr">购买类型：{{ item.attr }}</text>
-						<text class="time">{{ item.consultAddtime }}</text>
+						<text class="time">{{ item.consultAddtime | formatCreateTime}}</text>
 					</view>
 				</view>
 			</view>
@@ -132,7 +132,7 @@
 					<view class="con">
 						<view class="left">
 							<text class="title">{{item.name}}</text>
-							<text  class="time">在{{item.endTime}}前有效。 可领{{item.perLimit}}张</text>
+							<text  class="time">在{{item.endTime | formatCreateTime}}前有效。 可领{{item.perLimit}}张</text>
 
 						</view>
 						<view class="right">
@@ -190,6 +190,8 @@
 import Api from '@/common/api';
 import share from '@/components/share';
 import { mapState } from 'vuex';
+	import { formatDate } from '@/common/date';
+
 export default {
 	components: {
 		share
@@ -235,14 +237,14 @@ export default {
 		};
 	},
 	async onLoad(ops) {
-		//接收传值,id里面放的是标题，因为测试数据并没写id
+		console.log(ops)
 		let id = ops.id;
 		if (id) {
 			this.logining = true;
 			let params = { id: ops.id };
 			let data = await Api.apiCall('get', Api.index.groupActivityDetail, params);
 			this.logining = false;
-
+console.log(data)
 			if (data) {
 				let detailData = data.goods;
 				let goods = detailData.goods;
@@ -286,6 +288,8 @@ export default {
 				uni.setNavigationBarTitle({
 					title: goods.name
 				});
+			}else{
+			  this.$common.errorToShow('商品套餐不存在');
 			}
 			if (this.hasLogin) {
 				let params = { goodsId: ops.id };
@@ -343,6 +347,12 @@ export default {
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},
+	filters: {
+                  formatCreateTime(time) {
+                    let date = new Date(time);
+                    return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+                  },
+                },
 	methods: {
 	toggleMask(type) {
     				let timer = type === 'show' ? 10 : 300;

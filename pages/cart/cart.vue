@@ -23,7 +23,7 @@
 						<view class="image-wrapper">
 							<image
 								:src="item.productPic"
-								:class="[item.loaded]"
+								class="loaded"
 								mode="aspectFill"
 								lazy-load
 								@load="onImageLoad('cartList', index)"
@@ -41,7 +41,7 @@
 					</view>
 				</block>
 			</view>
-			
+
 			<!-- 底部菜单栏 -->
 			<view class="action-section">
 				<view class="checkbox">
@@ -221,7 +221,7 @@ export default {
 				url: `/pages/order/createOrder?cartIds=${cartIds}&&type=2`
 			});
 
-			this.$api.msg('跳转下一页 sendData');
+
 		}
 	}
 };

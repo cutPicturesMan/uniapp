@@ -20,13 +20,14 @@
 					<text class="tit">确认密码</text>
 					<input type="password" placeholder="请输入确认密码" v-model="confimpassword" @confirm="reg" />
 				</view>
+				<view class="input-item">
+                					<text class="tit">邀请码</text>
+                					<input type="number" v-model="invitecode" placeholder="请输入邀请码" />
+               </view>
 			</view>
 			<button class="confirm-btn" @click="reg" :disabled="logining">注册</button>
 
-
-
-
-			<view class="forget-section">忘记密码?</view>
+			<view class="forget-section" @click="toForget">忘记密码?</view>
 		</view>
 		<view class="register-section">
 			已经有账号?
@@ -43,6 +44,7 @@ import Api from '@/common/api';
 export default {
 	data() {
 		return {
+		invitecode:'',
 			phone: '',
 			password: '',
 			confimpassword: '',
@@ -61,6 +63,11 @@ export default {
 				url: '/pages/index/index'
 			});
 		},
+		toForget(){
+        				uni.navigateTo({
+        						url: '/pages/user/forget'
+        				})
+        			},
 		toRegist() {
 			uni.navigateTo({
 				url: '/pages/public/login'
@@ -82,7 +89,7 @@ export default {
 				this.$api.msg(err);
 				return;
 			}
-			this.logining = true;
+
 			let params ;
 			//有推荐码的话，带上
 			var invitecode = this.$db.get('invitecode')
@@ -90,13 +97,13 @@ export default {
 				data.invitecode = invitecode
 				params = { phone: this.phone, password: this.password, confimpassword: this.confimpassword ,source:3,invitecode:invitecode};
 			}else {
-				params = { phone: this.phone, password: this.password, confimpassword: this.confimpassword ,source:3};
+				params = { phone: this.phone, password: this.password, confimpassword: this.confimpassword ,source:3,invitecode:this.invitecode};
 			}
 			let data = await Api.apiCall('post', Api.index.simpleReg, params);
-			this.logining = false;
 
-			uni.switchTab({
-				url: '/pages/index/index'
+
+			uni.navigateTo({
+				url: '/pages/public/login'
 			});
 		}
 	}
@@ -111,7 +118,7 @@ page {
 	padding-top: 115px;
 	position: relative;
 	width: 100vw;
-	height: 100vh;
+	height: 120vh;
 	overflow: hidden;
 	background: #fff;
 }
@@ -119,7 +126,7 @@ page {
 	position: relative;
 	z-index: 90;
 	background: #fff;
-	padding-bottom: 40upx;
+	padding-bottom: 30upx;
 }
 .back-btn {
 	position: absolute;
@@ -230,7 +237,7 @@ page {
 .register-section {
 	position: absolute;
 	left: 0;
-	bottom: 50upx;
+	bottom: 40upx;
 	width: 100%;
 	font-size: $font-sm + 2upx;
 	color: $font-color-base;

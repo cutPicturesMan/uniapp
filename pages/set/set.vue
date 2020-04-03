@@ -8,7 +8,7 @@
 			<text class="cell-tit">收货地址</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view class="list-cell" @click="navTo('')" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell" @click="navTo('/pages/set/certification')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">实名认证</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
@@ -58,6 +58,7 @@ export default {
 				content: '确定要退出登录么',
 				success: e => {
 					if (e.confirm) {
+					 Api.apiCall('post', Api.index.logout, {});
 						this.logout();
 						this.$db.del('userInfos')
 						setTimeout(() => {

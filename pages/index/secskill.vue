@@ -56,6 +56,8 @@
 
 <script>
 import Api from '@/common/api';
+	import { formatDate } from '@/common/date';
+
 export default {
 	data() {
 		return {
@@ -137,7 +139,7 @@ export default {
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {
-			this.$api.msg('点击了扫描');
+		//	this.$api.msg('点击了扫描');
 		} else if (index === 1) {
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();

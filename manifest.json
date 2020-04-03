@@ -99,8 +99,7 @@
         "usingComponents" : true,
         "appid" : "wx5b3d23848b3c0a8e",
         "setting" : {
-            "urlCheck" : false,
-            "postcss" : true
+            "urlCheck" : false
         },
         "permission" : {}
     },

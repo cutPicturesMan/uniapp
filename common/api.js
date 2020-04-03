@@ -23,6 +23,7 @@ export default {
 
 		appletLogin_by_weixin: 'applet/login_by_weixin1', // 登录(手机号:phone 密码:password)
 		login: 'single/home/login', // 登录(手机号:phone 密码:password)
+	    logout: 'single/home/logout', //
 		appLogin : 'single/home/appLogin',
 		simpleReg: 'single/home/simpleReg', // 登录(手机号:phone 密码:password)
 		home: 'single/home/content', //首页展示
@@ -35,24 +36,45 @@ export default {
 		sendCodes: 'single/home/sms/codes', // 获取验证码
 		acceptCoupon: 'single/sms/add', // 获取优惠券
 		listMemberCoupon: 'single/sms/listMemberCoupon', // 优惠券列表
-		couponList: 'single/home/couponList', //  可领取的优惠券
+		couponList: 'single/home/couponList', //  优惠券
+		selectNotRecive: 'single/home/selectNotRecive', //  可领取的优惠券
 		userInfo: 'single/home/userInfo', //  用户信息
-
+		userSampleInfo: 'single/home/userSampleInfo', //  用户信息
 		groupActivityDetail: 'single/sms/group.activity.getdetial', // 查询团购详情信息
-	    groupActivityList: 'single/sms/groupActivityList', // 查询商品团购列表
+		groupActivityList: 'single/sms/groupActivityList', // 查询商品团购列表
 		logs: 'single/home/logs', //  记录日志
 
 	},
 	member: {
-		storeList: 'single/user/store/list', // 查询学校列表
-		storeDetail: 'single/user/storeDetail', // 查询拼团商品详情信息
-		storeSampleDetail: 'single/user/store/detail', // 查询店铺详情信息
+		getInviteData: 'single/user/getInviteData',
+		inviteUser: 'single/user/inviteUser',
+		inviteMoney: 'single/user/inviteMoney',
+		currentMember: 'single/user/currentMember',
+		updateMember: 'single/user/updateMember',
+		resetPassword: 'single/user/resetPassword',
 		schoolList: 'single/user/school/list', // 查询学校列表
 		schoolDetail: 'single/user/schoolDetail', // 查询拼团商品详情信息
 		getAreaByPid: 'single/user/getAreaByPid', // 根据pid查询区域
 		bindSchool: 'single/user/bindSchool', // 会员绑定学校
 		bindArea: 'single/user/bindArea', // 会员绑定区域
-		applyStore:'single/user/applyStore', // 商户入驻
+		applyStore: 'single/store/applyStore', // 商户入驻
+		storeDetail: 'single/store/detail', // 商户详情
+		storeDetail1: 'single/store/detail1', // 商户详情 带用户
+		store: 'single/store/home', // 商户主页
+		storeList: 'single/store/store/list', // 商户列表
+
+	},
+	build: {
+		getBuildNoticeByPage: 'single/build/getBuildNoticeByPage', // 所有社区和房间
+		getBuildWuyeCompanyByPage: 'single/build/getBuildWuyeCompanyByPage', // 所有社区和房间
+		groupList: 'single/build/groupList', // 所有社区和房间
+		communityList: 'single/build/communityList', // 所有社区和房间
+		floorList: 'single/build/floorList', // 所有社区和房间
+		allCommunity: 'single/build/allCommunity', // 所有社区和房间
+		bindCommunity: 'single/build/bindCommunity', // 绑定小区和房间
+		home: 'single/build/home', // 首页内容页信息展示
+		applyCommunity: 'single/build/applyCommunity', // 社区入驻
+
 
 	},
 	goods: {
@@ -95,18 +117,23 @@ export default {
 
 	},
 	order: {
+	 getRefundReason: 'single/oms/order/getRefundReason', // 查询售后原因
+    	saveOmsOrderReturnApply: 'single/oms/saveOmsOrderReturnApply', // 添加售后
+    	    aftersaleslist: 'single/oms/order/aftersaleslist', // 查询售后列表
+        	aftersalesinfo: 'single/oms/aftersalesinfo', // 查询售后详情
 		addGroup: 'single/oms/addGroup', // 发起拼团
 		acceptGroup: 'single/oms/acceptGroup', // 提交拼团
+		sampleOrderList: 'single/oms/sampleOrderList', // 查询订单列表
 		orderList: 'single/oms/order/list', // 查询订单列表
 		orderDetail: 'single/oms/detail', // 查询订单列表
 		preGroupActivityOrder: 'single/oms/preGroupActivityOrder', // 预览订单团购
+		bookOrder: 'single/oms/generateOrder', //  生成订单
 		preOrder: 'single/oms/submitPreview', // 预览订单
 		closeOrder: 'single/oms/closeOrder', // 关闭订单
-		bookOrder: 'single/oms/generateOrder', //  生成订单
-		confimDelivery:'single/oms/confimDelivery',//确认收货
-		applyRefund:'single/oms/applyRefund', // 申请退款
-		logisticbyapi:'single/oms/logisticbyapi', // 查看物流
-		orderevaluate:'single/oms/orderevaluate', //订单评价
+		confimDelivery: 'single/oms/confimDelivery', //确认收货
+		applyRefund: 'single/oms/applyRefund', // 申请退款
+		logisticbyapi: 'single/oms/logisticbyapi', // 查看物流
+		orderevaluate: 'single/oms/orderevaluate', //订单评价
 		addCart: 'cart/addCart', // 添加商品到购物车
 		cartList: 'cart/list', // 获取某个会员的购物车列表
 		promotionCartList: 'cart/list/promotion', // 获取某个会员的购物车列表,包括促销信息
@@ -128,29 +155,29 @@ export default {
 		aliPrecreatePay: 'aliPay/tradePrecreatePay', // 支付宝扫码支付
 		aliRefund: 'aliPay/tradePrecreatePay', // 支付宝退款
 		//微信
-		wapPay:'wxPay/wapPay', //微信H5 支付 注意：必须再web页面中发起支付且域名已添加到开发配置中
-		webPay:'wxPay/webPay',//公众号支付
-		scanCode1:'wxPay/scanCode1',//扫码支付模式一 已测试
-		scanCode2:'wxPay/scanCode2',//扫码支付模式二 已测试
-		appPay:'wxPay/appPay',//微信APP支付
-		micropay:'wxPay/micropay',//微信刷卡支付
-		miniAppPay:'wxPay/miniAppPay',//微信小程序支付
-		refund:'wxPay/refund',//微信退款 String transactionId,String outTradeNo
-		authCodeToOpenid:'wxPay/authCodeToOpenid',//openId，采用 网页授权获取 access_token API：SnsAccessTokenApi获取
+		wapPay: 'wxPay/wapPay', //微信H5 支付 注意：必须再web页面中发起支付且域名已添加到开发配置中
+		webPay: 'wxPay/webPay', //公众号支付
+		scanCode1: 'wxPay/scanCode1', //扫码支付模式一 已测试
+		scanCode2: 'wxPay/scanCode2', //扫码支付模式二 已测试
+		appPay: 'wxPay/appPay', //微信APP支付
+		micropay: 'wxPay/micropay', //微信刷卡支付
+		miniAppPay: 'wxPay/miniAppPay', //微信小程序支付
+		refund: 'wxPay/refund', //微信退款 String transactionId,String outTradeNo
+		authCodeToOpenid: 'wxPay/authCodeToOpenid', //openId，采用 网页授权获取 access_token API：SnsAccessTokenApi获取
 
 		//银联支付
-		frontConsume:'unionPay/frontConsume', //PC网关支付 B2C跟B2B查询区别就在于bizType的不同
-		frontConsume2:'unionPay/frontConsume2',//B2B的网关支付 B2C跟B2B查询区别就在于bizType的不同
-		wapConsume:'unionPay/wapConsume',//WAP支付 请在手机paymentlist端访问此action
-		appConsume:'unionPay/appConsume',//APP支付获取tn
-		frontrefund:'unionPay/refund',//
+		frontConsume: 'unionPay/frontConsume', //PC网关支付 B2C跟B2B查询区别就在于bizType的不同
+		frontConsume2: 'unionPay/frontConsume2', //B2B的网关支付 B2C跟B2B查询区别就在于bizType的不同
+		wapConsume: 'unionPay/wapConsume', //WAP支付 请在手机paymentlist端访问此action
+		appConsume: 'unionPay/appConsume', //APP支付获取tn
+		frontrefund: 'unionPay/refund', //
 
 		//京东
-		jdappPay:'JDPay/appPay', //App 支付
-		saveOrder:'JDPay/saveOrder',//String payType PC H5 支付
-		customerPay:'JDPay/customerPay',//商户二维码支付
-		fkmPay:'JDPay/fkmPay',//刷卡支付 String token, String amount
-		jdrefund:'JDPay/refund',//微信APP支付
+		jdappPay: 'JDPay/appPay', //App 支付
+		saveOrder: 'JDPay/saveOrder', //String payType PC H5 支付
+		customerPay: 'JDPay/customerPay', //商户二维码支付
+		fkmPay: 'JDPay/fkmPay', //刷卡支付 String token, String amount
+		jdrefund: 'JDPay/refund', //微信APP支付
 
 
 	},
@@ -183,15 +210,16 @@ export default {
 		let token = uni.getStorageSync('token') || '';
 		let fullurl = this.BASEURI + endpoint;
 		var contentType = 'application/x-www-form-urlencoded';
-	data.storeid=1;
-	data.authorization595=token;
+
+		data.storeid=1;
+    	data.authorization1=token;
 		//console.log(endpoint);
 		let [error, res] = await uni.request({
 			url: fullurl,
 			data: data,
 			method: method,
 			header: {
-				'storeid': 595,
+				'storeid': 1,
 				//'Content-Type': 'application/x-www-form-urlencoded',
 				 'content-type': contentType,
 				// 'authorization1': Authorization || ''

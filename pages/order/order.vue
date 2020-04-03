@@ -47,7 +47,7 @@
 							<text class="state" :style="{ color: item.stateTipColor }" v-else-if="item.orderType== 5">积分订单</text>
 							<button v-if="item.status == 12" class="action-btn" @click="cancelOrder(item)">取消订单</button>
 							<button v-if="item.status == 12" class="action-btn recom" @click="payOrder(item)">立即支付</button>
-							<button v-if="item.status <7" class="action-btn recom" @click="applyRefund(item)">申请退款</button>
+							<button v-if="item.status <5" class="action-btn recom" @click="applyRefund(item.id)">申请售后</button>
 							<button v-if="item.status == 3" class="action-btn recom" @click="confimDelivery(item)">确认收货</button>
 							<button class='action-btn recom'
 									hover-class="btn-hover"
@@ -113,13 +113,8 @@ export default {
 					text: '已完成',
 					loadingType: 'loading',
 					orderList: []
-				},
-				{
-					status: 13,
-					text: '申请退款',
-					loadingType: 'loading',
-					orderList: []
 				}
+
 			]
 		};
 	},
@@ -201,7 +196,7 @@ export default {
 				this.orderList = this.orderList.concat(orderList);
 
 				//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
-				this.loadingType = this.orderList.length > data.total ? 'nomore' : 'loading';
+				this.loadingType = this.orderList.length >= data.total ? 'nomore' : 'loading';
 
 				if (type === 'refresh') {
 					if (loading == 1) {
@@ -272,8 +267,15 @@ export default {
 			}
 
 		},
+		// 申请售后
+        		applyRefund(orderId) {
+        			this.$common.navigateTo(
+        					'../../pagesA/after_sale/index?order_id=' + orderId
+        			)
+        		},
+
 		//订单申请退款
-		async applyRefund(item) {
+		async applyRefund1(item) {
 
 			let params = { id: item.id };
 			let data = await Api.apiCall('post', Api.order.applyRefund, params);

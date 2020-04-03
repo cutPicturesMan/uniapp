@@ -21,7 +21,8 @@
 				<text class="title clamp">{{ item.name }}</text>
 				<view class="price-box">
 					<text class="price">{{ item.price }}</text>
-					<text>已售 {{ item.sale }}</text>
+					<text v-if="item.isFenxiao == 1">佣金 {{ item.fenxiaoPrice }}</text>
+					<text  v-else-if="item.isFenxiao == 0">已售 {{ item.sale }}</text>
 				</view>
 			</view>
 		</view>
@@ -74,6 +75,7 @@ export default {
 			loadingType: 'more', //加载更多状态
 			filterIndex: 0,
 			cateId: 0, //已选三级分类id
+			productAttributeCategoryId:0,
 			pageNum: 1,
 			cid: null,
 			priceOrder: 0, //1 价格从低到高 2价格从高到低
@@ -85,11 +87,13 @@ export default {
 	},
 
 	onLoad(options) {
+	console.log(options);
 		// #ifdef H5
 		this.headerTop = document.getElementsByTagName('uni-page-head')[0].offsetHeight + 'px';
 		// #endif
 		this.keyword = options.keyword;
 		this.cateId = options.sid;
+		this.productAttributeCategoryId=options.productAttributeCategoryId;
 		this.loadCateList(options.fid, options.sid);
 		this.loadData();
 	},
@@ -103,7 +107,7 @@ export default {
 	},
 	//下拉刷新
 	onPullDownRefresh() {
-		// this.pageNum = this.pageNum + 1;
+		 this.pageNum =  1;
 		this.loadData('refresh');
 	},
 	//加载更多
@@ -144,9 +148,9 @@ export default {
 			}
 			let params;
 			if (this.cateId) {
-				params = { pageNum: this.pageNum, productCategoryId: this.cateId, type: 1 };
+				params = { pageNum: this.pageNum, productCategoryId: this.cateId, type: 1,productAttributeCategoryId:this.productAttributeCategoryId };
 				if (this.keyword) {
-					params = { pageNum: this.pageNum, productCategoryId: this.cateId, keyword: this.keyword, type: 1 };
+					params = { pageNum: this.pageNum, productCategoryId: this.cateId, keyword: this.keyword, type: 1,productAttributeCategoryId:this.productAttributeCategoryId };
 				}
 			}
 			if (this.keyword) {

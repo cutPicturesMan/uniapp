@@ -78,10 +78,12 @@
 		</view>
 
 		<view class="ad-1"><image src="/static/temp/ad1.jpg" @click="navToDetailPageL('https://s.click.taobao.com/0T59c1w')" mode="scaleToFill"></image></view>
+<!-- 优惠券  https://s.click.taobao.com/OPh3c1w -->
+    <coupon v-for="(item, index) in couponList" :key="index" v-bind:item="item" theme="#ff0000"></coupon>
 
 		<!-- 秒杀楼层 https://s.click.taobao.com/Wds7c1w -->
-		<view class="seckill-section m-t">
-		<view class="s-header">
+		<view class="seckill-section m-t" v-if="homeFlashPromotion.flashSessionInfoList && homeFlashPromotion.flashSessionInfoList.length > 0">
+		<view class="s-header" >
 			<view class="" style="width: 80%;display: flex;flex-direction: row;align-items: center;">
 				<image class="s-img" src="/static/temp/secskill-img.jpg" mode="widthFix" @click="navToDetailPageL('https://s.click.taobao.com/Wds7c1w')"></image>
 				<text class="tip" style="margin-left: 20upx;">{{ homeFlashPromotion.flashName }}</text>
@@ -105,8 +107,6 @@
 			</scroll-view>
 		</view>
 </view>
-<!-- 优惠券  https://s.click.taobao.com/OPh3c1w -->
-    <coupon v-for="(item, index) in couponList" :key="index" v-bind:item="item" theme="#ff0000"></coupon>
 
 		<!-- 团购楼层 -->
 		<view class="f-header m-t" @click="navToTabPage('/pages/product/groupList')" v-if="groupHotGoodsList.length > 0">
@@ -125,7 +125,7 @@
 						<view class="t-box">
 							<text class="title clamp">{{ item.goods.title }}</text>
 							<view class="price-box">
-								<text class="price">{{ item.goods.price }}</text>
+								<text class="price">{{ item.groupPrice }}</text>
 								<text class="m-price">￥{{ item.goods.price }}</text>
 							</view>
 							<view class="pro-box">
@@ -165,7 +165,7 @@
 		</view>
 
 		<!-- 新品上市 -->
-		<view class="f-header m-t" @click="navToDetailPageL('https://s.click.taobao.com/OPh3c1w')">
+		<view class="f-header m-t" @click="navToTabPage('/pages/product/list')">
 			<image src="/static/temp/h1.png" ></image>
 			<view class="tit-box">
 				<text class="tit">新品上市</text>
@@ -179,11 +179,14 @@
 				<view class="image-wrapper"><image :src="item.pic" mode="aspectFill"></image></view>
 				<text class="title clamp">{{ item.name }}</text>
 				<text class="price">￥{{ item.price }}</text>
+
+				<text  v-if="item.isFenxiao == 1">佣金 {{ item.fenxiaoPrice }}</text>
+                <text  v-else-if="item.isFenxiao == 0">【{{ item.storeName }}】</text>
 			</view>
-				<uni-load-more :status="loadingType"></uni-load-more>
+			<uni-load-more :status="loadingType"></uni-load-more>
 		</view>
 	</view>
-
+	</view>
 </template>
 
 <script>
@@ -198,7 +201,7 @@ export default {
 components: {
 			coupon,
 			zySearch,
-				uniLoadMore,
+			uniLoadMore,
 			navBar
 		},
 	data() {
@@ -221,21 +224,22 @@ components: {
 			newProductList: [],
 		};
 	},
-		//加载更多
-        	onReachBottom() {
-        		this.pageNum = this.pageNum + 1;
 
-        		this.getNewProductList();
-        	},
-    	onPullDownRefresh() {
-    	this.pageNum = this.pageNum + 1;
-    	this.getNewProductList('refresh');
+    	//加载更多
+    	onReachBottom() {
+    		this.pageNum = this.pageNum + 1;
 
-    		this.loadData();
-    		setTimeout(function () {
-    			uni.stopPullDownRefresh();
-    		}, 2000);
+    		this.getNewProductList();
     	},
+	onPullDownRefresh() {
+	this.pageNum = this.pageNum + 1;
+	this.getNewProductList('refresh');
+
+		this.loadData();
+		setTimeout(function () {
+			uni.stopPullDownRefresh();
+		}, 2000);
+	},
 	onShareAppMessage() {
 
 	},
@@ -327,7 +331,7 @@ this.getNewProductList('refresh');
 				this.getBanner();
 				this.getHotGoodsList();
 				this.getFlashPromotion();
-				// this.getCatList();
+				 this.getCouponList();
 				this.getNewProductList();
 
 
@@ -338,10 +342,8 @@ this.getNewProductList('refresh');
 		 */
 		async getStore(){
 			let params = {};
-			let data = await Api.apiCall('get', Api.member.storeSampleDetail, params);
-			if (data) {
-				this.store = data || [];
-			}
+		//	let data = await Api.apiCall('get', Api.member.storeSampleDetail, params);
+
 		},
 		/**
 		 * 获取轮播图
@@ -355,7 +357,16 @@ this.getNewProductList('refresh');
                                 this.titleNViewBackground = 'rgb(203, 87, 60)';
 			}
 		},
-
+/**
+		 * 获取轮播图
+		 */
+		async getCouponList(){
+			let params = {pageSize:3};
+			let data = await Api.apiCall('get', Api.index.selectNotRecive, params);
+			if (data) {
+				this.couponList = data || [];
+			}
+		},
 		/**
     		     * 获取新品上市信息
     		     */
@@ -575,7 +586,7 @@ this.getNewProductList('refresh');
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {
-			this.$api.msg('点击了扫描');
+			 // this.$api.msg('点击了扫描');
 		} else if (index === 1) {
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();

@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import Api from '@/common/api';
 	export default{
 		data(){
 			return{
@@ -54,8 +55,10 @@
 				userinfo: {},
 			}
 		},
-		onShow(){
-			
+		async onShow(){
+			 let params = {  };
+                        				let data1 = await Api.apiCall('get', Api.member.currentMember, params);
+            					this.totalMoney = data1.blance;
 		},
 		methods:{
 			

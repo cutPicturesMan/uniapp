@@ -22,7 +22,7 @@
 			<!-- #ifdef H5 -->
 			<button v-if="isWeiXin == 1" class="confirm-btn" @click="wechatH5Login" :disabled="logining">微信授权登录</button>
 			<!-- #endif -->
-			<view class="forget-section">忘记密码?</view>
+			<view class="forget-section" @click="toForget">忘记密码?</view>
 			<view class="forget-section" @click="toLoginCode">验证码登录</view>
 
 			<!-- #ifdef MP-WEIXIN -->
@@ -48,14 +48,12 @@ import store from '@/store/index';
 export default {
 	data() {
 		return {
-			phone: '17328770592',
-			password: '123456',
+			phone: '13146587722',
+			password: '123456789',
 			isWeiXin: 0,
 
 			logining: false,
-
 			isGetPhone: false,
-
 			info: '',
 		};
 	},
@@ -74,6 +72,11 @@ export default {
 			const key = e.currentTarget.dataset.key;
 			this[key] = e.detail.value;
 		},
+		toForget(){
+                				uni.navigateTo({
+                						url: '/pages/user/forget'
+                				})
+                			},
 		toLoginCode(){
 			uni.navigateTo({
 				url: '/pages/public/loginCode'
@@ -135,7 +138,7 @@ export default {
 						success: function(info) {
 							datas=info;
 							console.log(info.data);
-							uni.setStorageSync('userInfo', info.data.data);
+							uni.setStorageSync('userInfo', info.data.data.userInfo);
 							uni.setStorageSync('token', info.data.data.tokenHead+info.data.data.token);
 
 							uni.switchTab({

@@ -5,31 +5,33 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
 	state: {
-		hasLogin: false,
+		hasLogin: true,
 		userInfo:''
 	},
 	mutations: {
 		login(state, provider) {
+		console.log(provider);
 			if (provider && provider!=undefined){
                 state.hasLogin = true;
+				uni.setStorage({//缓存用户登陆状态
+					key: 'userInfo',
+					data: provider.userInfo
+				})
+				state.userInfo = provider;
 			}
-			state.userInfo = provider;
-			uni.setStorage({//缓存用户登陆状态
-			    key: 'userInfo',  
-			    data: provider  
-			}) 
-		
+
+
 		},
 		logout(state) {
 			state.hasLogin = false;
 			state.userInfo = '';
-			uni.removeStorage({  
-                key: 'userInfo'  
+			uni.removeStorage({
+                key: 'userInfo'
             })
 		}
 	},
 	actions: {
-	
+
 	}
 })
 

@@ -15,7 +15,7 @@
 		<view class="goods-list">
 			<view v-for="(item, index) in goodsList" :key="index" class="goods-item" @click="navToDetailPage(item)">
 				<view class="image-wrapper"><image :src="item.icon" mode="aspectFill"></image></view>
-				<text class="title clamp">{{ item.name }}</text>
+				<text class="title clamp">{{ item.title }}</text>
 				<view class="price-box">
 					<text class="price">{{ item.price }}</text>
 					<text>已售 6</text>
@@ -82,7 +82,7 @@ export default {
 	},
 	//下拉刷新
 	onPullDownRefresh() {
-		this.pageNum = this.pageNum + 1;
+		this.pageNum =  1;
 		this.loadData('refresh');
 	},
 	//加载更多

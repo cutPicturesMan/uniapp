@@ -82,7 +82,7 @@ export default {
 	},
 	//下拉刷新
 	onPullDownRefresh() {
-		this.pageNum = this.pageNum + 1;
+		this.pageNum =  1;
 		this.loadData('refresh');
 	},
 	//加载更多

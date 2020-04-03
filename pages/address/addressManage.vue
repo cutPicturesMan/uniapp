@@ -72,8 +72,8 @@ export default {
 				region: '', //    [str] [必填] [区]
 				detailAddress: '', //     [str] [必填] [详址]
 				defaultStatus: '0', //     [int] [可选] [默认地址。1是0否]
-				longitude: null, //经度
-				latitude: null //纬度
+				longitude: 0, //经度
+				latitude: 0 //纬度
 			},
 			IDcard: '',
 			id: '',

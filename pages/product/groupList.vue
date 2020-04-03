@@ -14,15 +14,15 @@
 		</view>
 		<view class="goods-list">
 			<view v-for="(item, index) in goodsList" :key="index" class="goods-item" @click="navToDetailPage(item)">
-				<view class="image-wrapper"><image :src="item.pic" mode="aspectFill"></image></view>
-				<text class="title clamp">{{ item.name }}</text>
+				<view class="image-wrapper"><image :src="item.goods.pic" mode="aspectFill"></image></view>
+				<text class="title clamp">{{ item.goods.name }}</text>
 				<view class="price-box">
-					<text class="price">{{ item.price }}</text>
-					<text>已售 {{ item.sale }}</text>
+					<text class="price">{{ item.groupPrice }}</text>
+					<text>原价 {{ item.goods.price }}</text>
 				</view>
 			</view>
 		</view>
-		<uni-load-more :status="loadingType"></uni-load-more>
+
 
 		<view class="cate-mask" :class="cateMaskState === 0 ? 'none' : cateMaskState === 1 ? 'show' : ''" @click="toggleCateMask">
 			<view class="cate-content" @click.stop.prevent="stopPrevent" @touchmove.stop.prevent="stopPrevent">
@@ -82,7 +82,7 @@ export default {
 	},
 	//下拉刷新
 	onPullDownRefresh() {
-		this.pageNum = this.pageNum + 1;
+		this.pageNum =  1;
 		this.loadData('refresh');
 	},
 	//加载更多
@@ -128,8 +128,8 @@ export default {
 				params = { pageNum: this.pageNum };
 			}
 
-			let list = await Api.apiCall('get', Api.goods.groupGoodsList, params);
-			let goodsList = list.records;
+			let list = await Api.apiCall('get', Api.goods.groupHotGoodsList, params);
+			let goodsList = list;
 			// let goodsList = await this.$api.json('goodsList');
 			if (type === 'refresh') {
 				this.goodsList = [];
@@ -148,6 +148,7 @@ export default {
 			}
 
 			this.goodsList = this.goodsList.concat(goodsList);
+
 
 			//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
 			this.loadingType = this.goodsList.length > list.total ? 'nomore' : 'more';
@@ -202,8 +203,8 @@ export default {
 		//详情
 		navToDetailPage(item) {
 			//测试数据没有写id，用title代替
-			let id = item.id;
-			let groupId = item.groupId;
+			let id = item.goodsId;
+			let groupId = item.id;
 			uni.navigateTo({
 				url: `/pages/product/groupProduct?id=${id}&&groupId=&{groupId}`
 			});

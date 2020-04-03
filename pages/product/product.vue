@@ -50,38 +50,7 @@
 				<text class="con t-r red">领取优惠券</text>
 				<text class="yticon icon-you"></text>
 			</view>
-			<view class="c-row b-b" v-if="basicMarkingList && basicMarkingList.length > 0" >
-				<text class="tit">满减折扣</text>
-				<view class="hot-floor" v-if="item1.actrule && item1.actrule.length > 0" v-for="(item1, index1) in basicMarkingList" :key="index1">
-					<view class="floor-img-box"> <text class="name">{{ item1.name }}</text></view>
 
-					<scroll-view class="floor-list" scroll-x>
-						<view>
-							<view v-for="(item, index) in item1.actrule" :key="index" class="floor-item" >
-								<text class="title clamp" v-if="item1.smallType==1">满{{item.fullPrice }}可减{{item.reducePrice }}</text>
-								<text class="title clamp" v-else>满{{item.fullPrice }} 件{{item.reducePrice }}折</text>
-
-							</view>
-						</view>
-					</scroll-view>
-				</view>
-			</view>
-			<view class="c-row b-b" v-if="basicGiftsList && basicGiftsList.length > 0">
-				<text class="tit">赠品活动</text>
-				<view class="hot-floor" v-if="item1.giftsList && item1.giftsList.length > 0" v-for="(item1, index1) in basicGiftsList" :key="index1">
-					<view class="floor-img-box"> <text class="name">{{ item1.name }}</text></view>
-
-					<scroll-view class="floor-list" scroll-x>
-						<view class="scoll-wrapper">
-							<view v-for="(item, index) in item1.giftsList" :key="index" class="floor-item" >
-								<image :src="item.pic" mode="aspectFill"></image>
-								<text class="title clamp">{{ item.name }}</text>
-								<text class="price" v-if="item.rule">￥{{ item.price }}</text>
-							</view>
-						</view>
-					</scroll-view>
-				</view>
-			</view>
 			<view class="c-row b-b" v-if="serviceList && serviceList.length > 0">
 				<text class="tit">服务</text>
 				<view class="bz-list con">
@@ -113,7 +82,7 @@
 					<text class="con">{{ item.consultContent }}</text>
 					<view class="bot">
 						<text class="attr">购买类型：{{ item.attr }}</text>
-						<text class="time">{{ item.consultAddtime }}</text>
+						<text class="time">{{ item.consultAddtime | formatCreateTime}}</text>
 					</view>
 				</view>
 			</view>
@@ -209,6 +178,8 @@
 import Api from '@/common/api';
 import share from '@/components/share';
 import { mapState } from 'vuex';
+	import { formatDate } from '@/common/date';
+
 export default {
 	components: {
 		share
@@ -318,10 +289,6 @@ export default {
             let couponList1 = await Api.apiCall('get', Api.index.couponList, params3);
             this.couponList = couponList1;
 
-			let params4 = { id: ops.id};
-			let mapData = await Api.apiCall('get', Api.goods.goodsPromoto, params4);
-			this.basicMarkingList = mapData.basicMarkingList;
-			this.basicGiftsList = mapData.basicGiftsList;
 		}
 
 		//规格 默认选中第一条
@@ -365,6 +332,12 @@ export default {
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},
+	filters: {
+                  formatCreateTime(time) {
+                    let date = new Date(time);
+                    return formatDate(date, 'yyyy-MM-dd hh:mm:ss')
+                  },
+                },
 	methods: {
 	toggleMask(type) {
     				let timer = type === 'show' ? 10 : 300;
@@ -430,8 +403,9 @@ export default {
 				}
 			});
 			let valuesA = specs.substr(0, specs.length - 1).split(',');
-
+			this.sku =null;
 			this.skuList.forEach(item => {
+
 				if (valuesA.length == 1 && item.sp1 == valuesA[0]) {
 					this.sku = item;
 				}
@@ -441,16 +415,20 @@ export default {
 				if (valuesA.length == 3 && item.sp3 == valuesA[0] && item.sp2 == valuesA[1] && item.sp1 == valuesA[2]) {
 					this.sku = item;
 				}
-				if (!this.sku.pic) {
-					this.sku.pic = this.goods.pic;
-				}
-				if (!this.sku.stock) {
-					this.sku.stock = 0;
-				}
-				if (!this.sku.price) {
-					this.sku.price = this.goods.price;
-				}
 			});
+			if (!this.sku) {
+				uni.showToast({title:"商品不存在！"});
+			}
+			if (!this.sku.pic) {
+				this.sku.pic = this.goods.pic;
+			}
+			if (!this.sku.stock) {
+				this.sku.stock = 0;
+			}
+			if (!this.sku.price) {
+				this.sku.price = this.goods.price;
+			}
+			console.log(this.sku)
 		},
 		//分享
 		share() {
@@ -503,6 +481,7 @@ export default {
 			}
 		},
 		async addCart(item) {
+		console.log(item)
 			if (!this.hasLogin) {
 				let url = '/pages/public/login';
 				uni.navigateTo({

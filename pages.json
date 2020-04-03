@@ -122,33 +122,18 @@
 					}
 				}
 			}
-		},{
-			"path": "pages/store/school",
-			"style": {
-				"navigationBarTitleText": "学校详情展示",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
-			}
-		},{
-			"path": "pages/store/store",
-			"style": {
-				"navigationBarTitleText": "店铺详情展示",
-				"app-plus": {
-					"titleNView": {
-						"type": "transparent"
-					}
-				}
-			}
 		}, {
 			"path": "pages/set/set",
 			"style": {
 				"navigationBarTitleText": "设置"
 			}
 		},
-
+		{
+			"path": "pages/set/certification",
+			"style": {
+				"navigationBarTitleText": "身份认"
+			}
+		},
 		{
 			"path": "pages/userinfo/userinfo",
 			"style": {
@@ -184,16 +169,6 @@
 				}
 			}
 		}, {
-			"path": "pages/public/index1",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom",
-				"app-plus": {
-					"titleNView": false,
-					"animationType": "slide-in-bottom"
-				}
-			}
-		},  {
 			"path": "pages/public/reg",
 			"style": {
 				"navigationBarTitleText": "",
@@ -262,7 +237,48 @@
 					"bounce": "none"
 				}
 			}
+		},  {
+			"path": "pages/user/deposit",
+			"style": {
+				"navigationBarTitleText": "余额冲",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+	, {
+			"path": "pages/user/coupon",
+			"style": {
+				"navigationBarTitleText": "我的优惠券",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
 		}, {
+			"path": "pages/user/myPurse",
+			"style": {
+				"navigationBarTitleText": "我的提",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/user/reset_password",
+			"style": {
+				"navigationBarTitleText": "忘记密码",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/user/forget",
+			"style": {
+				"navigationBarTitleText": "忘记密码",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},{
 			"path": "pages/money/money",
 			"style": {}
 		}, {
@@ -362,32 +378,14 @@
 			}
 		}
 
-	,{
-			"path" : "pages/store/schoolList",
-			"style" : {
-				"enablePullDownRefresh": true,
-				"navigationBarTitleText": "学校列表"
-			}
-		},{
-			"path" : "pages/product/discountList",
-			"style" : {
-				"enablePullDownRefresh": true,
-				"navigationBarTitleText": "折扣列表"
-			}
-		}
+
         ,{
             "path" : "pages/product/list",
             "style" : {
 				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "商品列表"
 			}
-        } ,{
-			"path" : "pages/store/list",
-			"style" : {
-				"enablePullDownRefresh": true,
-				"navigationBarTitleText": "商铺列表"
-			}
-		}
+        }
 	,{
 			"path" : "pages/user/profile",
 			"style" : {
@@ -400,19 +398,24 @@
 				"enablePullDownRefresh": true,
 				"navigationBarTitleText": "推广信息"
 			}
-		}
-
-	, {
-			"path": "pages/store/applyBusiness",
+		},
+		{
+			"path": "pages/user/invite",
 			"style": {
-
-				"navigationBarTitleText": "商户入驻"
-
+				"navigationBarTitleText": "邀请好友",
+				"navigationStyle":"custom"
+			}
+		},
+{
+			"path": "pages/user/inviteList",
+			"style": {
+				"navigationBarTitleText": "邀请好友",
+				"navigationStyle":"custom"
 			}
 		},{
-			"path": "pages/store/nearbyBusiness",
+			"path": "pages/user/inviteMoney",
 			"style": {
-				"navigationBarTitleText": "附近商家",
+				"navigationBarTitleText": "邀请好友佣金",
 				"navigationStyle":"custom"
 			}
 		}
@@ -461,7 +464,80 @@
 				}
 			}
 		}
-    ],
+	],
+	"subPackages":[{
+		"root": "pagesA",
+		"pages": [{
+			"path":"build/community",
+			"style" : {
+				"navigationBarTitleText": "社区主页"
+			}
+		},{
+			"path":"build/applyCommunity",
+			"style" : {
+				"navigationBarTitleText": "社区入驻"
+			}
+		},{
+			"path":"build/bindCommunity",
+			"style" : {
+				"navigationBarTitleText": "绑定社区"
+			}
+		},{
+			"path":"build/communityList",
+			"style" : {
+				"navigationBarTitleText": "社区列表"
+			}
+		},
+			{
+				"path":"build/floorList",
+				"style" : {
+					"navigationBarTitleText": "楼房列表"
+				}
+			},
+			{
+				"path": "build/groupProduct",
+				"style": {
+					"navigationBarTitleText": "团购详情展示",
+					"app-plus": {
+						"titleNView": {
+							"type": "transparent"
+						}
+					}
+				}
+			},{
+				"path" : "build/groupList",
+				"style" : {
+					"enablePullDownRefresh": true,
+					"navigationBarTitleText": "团购商品列表"
+				}
+			},{
+				"path" : "build/notice",
+				"style" : {
+					"navigationBarTitleText": "通知"
+				}
+			},
+
+			{
+				"path": "after_sale/index",
+				"style": {
+					"navigationBarTitleText": "申请售后"
+				}
+			},
+			{
+				"path": "after_sale/list",
+				"style": {
+					"navigationBarTitleText": "售后列表"
+				}
+			},
+			{
+				"path": "after_sale/detail",
+				"style": {
+					"navigationBarTitleText": "售后详情"
+				}
+			}
+		]
+
+	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "uni-app",
