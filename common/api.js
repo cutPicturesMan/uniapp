@@ -181,7 +181,7 @@ export default {
 		}
 
 		let token = uni.getStorageSync('token') || '';
-		let fullurl = this.BASEURI + endpoint;123
+		let fullurl = this.BASEURI + endpoint;
 		var contentType = 'application/x-www-form-urlencoded';
 	data.storeid=1;
 	data.authorization595=token;
