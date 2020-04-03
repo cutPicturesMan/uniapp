@@ -48,7 +48,7 @@ import store from '@/store/index';
 export default {
 	data() {
 		return {
-			phone: '13146587722',
+			phone: '17328770592',
 			password: '123456',
 			isWeiXin: 0,
 

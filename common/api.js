@@ -183,7 +183,7 @@ export default {
 		let token = uni.getStorageSync('token') || '';
 		let fullurl = this.BASEURI + endpoint;
 		var contentType = 'application/x-www-form-urlencoded';
-	data.storeid=595;
+	data.storeid=1;
 	data.authorization595=token;
 		//console.log(endpoint);
 		let [error, res] = await uni.request({
