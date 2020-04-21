@@ -38,7 +38,6 @@
 				</view>
 			</view>
 			<view class="vip-card-box">
-				<image class="card-bg" src="/static/vip-card-bg.png" mode=""></image>
 				<view class="b-btn">立即开通</view>
 				<view class="tit" v-if="userDetailInfo">
 					<text class="yticon icon-iLinkapp-"></text>
