@@ -23,8 +23,6 @@
 			</view>
 		</view>
 		<uni-load-more :status="loadingType"></uni-load-more>
-
-
 	</view>
 </template>
 
@@ -76,7 +74,7 @@ export default {
 	},
 	//加载更多
 	onReachBottom() {
-		this.pageNum = this.pageNum + 1;
+		this.pageNum += 1;
 		this.loadData();
 	},
 	methods: {
@@ -124,10 +122,10 @@ export default {
 				});
 			}
 
+			//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
+			this.loadingType = list.records.length < list.size ? 'nomore' : 'more';
 			this.goodsList = this.goodsList.concat(goodsList);
 
-			//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
-			this.loadingType = this.goodsList.length > list.total ? 'nomore' : 'more';
 			if (type === 'refresh') {
 				if (loading == 1) {
 					uni.hideLoading();
