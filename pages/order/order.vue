@@ -3,7 +3,6 @@
 		<view class="navbar">
 			<view v-for="(item, index) in navList" :key="index" class="nav-item" :class="{ current: tabCurrentIndex === index }" @click="tabClick(index)">{{ item.text }}</view>
 		</view>
-
 		<swiper :current="tabCurrentIndex" class="swiper-box" duration="300" @change="changeTab">
 			<swiper-item class="tab-content" v-for="(tabItem, tabIndex) in navList" :key="tabIndex">
 				<scroll-view class="list-scroll-content" scroll-y @scrolltolower="loadData">
@@ -56,9 +55,8 @@
 							>立即评价</button>
 						</view>
 					</view>
-<uni-load-more :status="loadingType"></uni-load-more>
+					<uni-load-more :status="loadingType"></uni-load-more>
 				</scroll-view>
-
 			</swiper-item>
 		</swiper>
 	</view>
@@ -78,47 +76,49 @@ export default {
 	data() {
 		return {
 			tabCurrentIndex: 0,
-			pageNum: 1,
 			orderList:[],
 			headerPosition: 'fixed',
 			headerTop: '0px',
-			loadingType: 'loading', //加载更多状态
 			navList: [
 				{
 					status: 0,
 					text: '全部',
+					orderList: [],
+					pageNum: 1,
 					loadingType: 'loading',
-					orderList: []
 				},
 				{
 					status: 12,
 					text: '待付款',
+					orderList: [],
+					pageNum: 1,
 					loadingType: 'loading',
-					orderList: []
 				},
 				{
 					status: 2,
 					text: '待发货',
+					orderList: [],
+					pageNum: 1,
 					loadingType: 'loading',
-					orderList: []
 				},
 				{
 					status: 3,
 					text: '已发货',
+					orderList: [],
+					pageNum: 1,
 					loadingType: 'loading',
-					orderList: []
 				},
 				{
 					status: 5,
 					text: '已完成',
+					orderList: [],
+					pageNum: 1,
 					loadingType: 'loading',
-					orderList: []
 				}
 			],
 			isLoading: false
 		};
 	},
-
 	onLoad(options) {
 		/**
 		 * 修复app端点击除全部订单外的按钮进入时不加载数据的问题
@@ -138,16 +138,24 @@ export default {
 	},
 	//下拉刷新
 	onPullDownRefresh() {
-		this.pageNum =  1;
+		this.navList[this.tabCurrentIndex].pageNum = 1;
 		this.loadData('refresh');
 	},
 	//加载更多
 	onReachBottom() {
-		this.pageNum =  1;
+		this.navList[this.tabCurrentIndex].pageNum = 1;
 		this.loadData('refresh');
 	},
     computed: {
-		...mapState(['hasLogin', 'userInfo'])
+		...mapState(['hasLogin', 'userInfo']),
+		loadingType: {
+			get() {
+				return this.navList[this.tabCurrentIndex].loadingType;
+			},
+			set(value) {
+				this.navList[this.tabCurrentIndex].loadingType = value;
+			}
+		} 
 	},
 	methods: {
 		//详情
@@ -160,23 +168,24 @@ export default {
 		},
 		//swiper 切换
 		changeTab(e) {
+			if (this.isLoading) return false;
 			this.tabCurrentIndex = e.target.current;
 			this.loadData('refresh');
 		},
 		//顶部tab点击
 		tabClick(index) {
-		    this.pageNum =  1;
-			this.loadData('refresh');
 			this.tabCurrentIndex = index;
+			this.navList[this.tabCurrentIndex].pageNum = 1;
+			this.loadData('refresh');
 		},
 		//获取订单列表
 		async loadData(type = 'add', loading) {
 			//这里是将订单挂载到tab列表下
-			let { tabCurrentIndex: index, isLoading } = this;
+			let { tabCurrentIndex: index, isLoading, loadingType } = this;
 			let navItem = this.navList[index];
-			let status = navItem.status;
+			let { pageNum, status } = navItem; 
 			
-			if (isLoading) {
+			if (isLoading || loadingType == 'nomore') {
 				return false;
 			}
 			
@@ -187,9 +196,12 @@ export default {
 				});
 			} else {
 				this.isLoading = true;
-				let params = { pageNum: this.pageNum, status: status };
+				let params = { pageNum, status };
 				let data = await Api.apiCall('get', Api.order.orderList, params);
 				this.isLoading = false;
+				
+				// 请求前后切换了tab，则丢弃该数据
+				if (this.tabCurrentIndex != index) return false;
 				
 				let goodsList = data.records;
 				let orderList = goodsList.filter(item => {
@@ -208,10 +220,9 @@ export default {
 					this.orderList = [];
 				}
 
+				//判断是否还有下一页，有是more，没有是nomore(测试数据判断大于20就没有了)
+				this.loadingType = goodsList.length < data.size ? 'nomore' : 'loading';
 				this.orderList = this.orderList.concat(orderList);
-
-				//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
-				this.loadingType = this.orderList.length >= data.total ? 'nomore' : 'loading';
 
 				if (type === 'refresh') {
 					if (loading == 1) {
@@ -220,7 +231,8 @@ export default {
 						uni.stopPullDownRefresh();
 					}
 				}
-				this.pageNum = this.pageNum + 1;
+				
+				navItem.pageNum += 1;
 				orderList.forEach(item => {
 					navItem.orderList.push(item);
 				});
@@ -238,9 +250,8 @@ export default {
 		},
 		async payOrder(item) {
 			this.$common.navigateTo(
-					'/pages/money/pay?id=' + item.id
+				'/pages/money/pay?id=' + item.id
 			)
-
 		},
 		//取消订单
 		async cancelOrder(item) {
@@ -253,11 +264,9 @@ export default {
 				this.loadData('refresh');
 				this.tabCurrentIndex = 4;
 			}
-
 		},
 		//订单确认收货
 		async confimDelivery(item) {
-
 			let params = { id: item.id };
 			let data = await Api.apiCall('post', Api.order.confimDelivery, params);
 			console.log(data);
@@ -267,18 +276,15 @@ export default {
 				this.loadData('refresh');
 				this.tabCurrentIndex = 4;
 			}
-
 		},
 		// 申请售后
-        		applyRefund(orderId) {
-        			this.$common.navigateTo(
-        					'../../pagesA/after_sale/index?order_id=' + orderId
-        			)
-        		},
-
+		applyRefund(orderId) {
+			this.$common.navigateTo(
+					'../../pagesA/after_sale/index?order_id=' + orderId
+			)
+		},
 		//订单申请退款
 		async applyRefund1(item) {
-
 			let params = { id: item.id };
 			let data = await Api.apiCall('post', Api.order.applyRefund, params);
 			if (data) {
@@ -299,7 +305,7 @@ export default {
 		//订单状态文字和颜色
 		orderStateExp(value) {
 			let stateTip = '',
-					stateTipColor = '#fa436a';
+				stateTipColor = '#fa436a';
 			if (value === 12) {
 				stateTipColor = '#909399';
 				stateTip = '待付款';
@@ -335,7 +341,6 @@ export default {
 
 			return { stateTip, stateTipColor };
 		},
-
 		dateFormat(time) {
 			if (time == null || time === '') {
 				return 'N/A';
