@@ -3,13 +3,13 @@
 			<view class="list-cell b-b m-t" @click="upImg" :hover-stay-time="50" style="display: flex;align-items: center;">
 				<text class="cell-tit">我的头像</text>
 				<view class="" style="display: flex;align-items: center;justify-content: center;height: 80upx;line-height: 80upx;">
-					<image v-if="userInfos && userInfos.icon" :src="userInfos.icon" style="border-radius: 50%;width: 100upx;height: 100upx;"></image>
+					<image v-if="userInfo && userInfo.icon" :src="userInfo.icon" style="border-radius: 50%;width: 100upx;height: 100upx;"></image>
 					<text class="cell-more yticon icon-you"></text>
 				</view>
 			</view>
 
 			<view class="list-cell b-b m-t" @click="inputShowModal('nickname')" hover-class="cell-hover" :hover-stay-time="50">
-				<text class="cell-tit" v-if="userInfos && userInfos.nickname">修改昵称:{{userInfos.nickname|| ''}}</text>
+				<text class="cell-tit" v-if="userInfo && userInfo.nickname">修改昵称:{{userInfo.nickname|| ''}}</text>
 				<text class="cell-more yticon icon-you"></text>
 			</view>
 			<view class="list-cell b-b" @click="genderShowModal" hover-class="cell-hover" :hover-stay-time="50">
@@ -50,7 +50,7 @@ export default {
 			gender: undefined,
 			genders: [{ name: '保密', value: 0 }, { name: '男', value: 1 }, { name: '女', value: 2 }],
 
-			userInfos: {},
+			userInfo: {},
 			sourceTypeIndex: 0,
 			sourceType: ['拍照', '相册', '拍照或相册'],
 			sizeTypeIndex: 0,
@@ -60,20 +60,20 @@ export default {
 	async onShow() {
 		 let params = {  };
 		 let data = await Api.apiCall('get', Api.index.userSampleInfo, params);
-		 this.userInfos=data;
-		 console.log(this.userInfos);
+		 this.userInfo=data;
+		 console.log(this.userInfo);
 	},
 	async onLoad() {
 		let params = {  };
 		let data = await Api.apiCall('get', Api.index.userSampleInfo, params);
-		this.userInfos=data;
-		console.log(this.userInfos);
+		this.userInfo=data;
+		console.log(this.userInfo);
 	},
 	methods: {
 		upImg(){
 			this.$otherApi.uploadFiles(res => {
 				if (res.code == 200) {
-					this.userInfos.icon = res.data;
+					this.userInfo.icon = res.data;
 					let obj = {
 						id:1,
 						icon: res.data
@@ -109,7 +109,7 @@ export default {
 			obj[that.feild] = that.inputContent;
 			Api.apiCall('post', Api.member.updateMember, obj);
 			that.$api.msg('修改成功');
-			that.userInfos[that.feild] = that.inputContent
+			that.userInfo[that.feild] = that.inputContent
 
 		},
 		genderRadioChange(e) {

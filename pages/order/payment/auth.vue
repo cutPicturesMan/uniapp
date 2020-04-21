@@ -43,7 +43,7 @@ export default {
       if (res) {
             this.login(data);
             console.log(data);
-            this.$db.set('userInfos', data.userInfo);
+            this.$db.set('userInfo', data.userInfo);
             this.$db.set('token', data.tokenHead+data.token);
             uni.switchTab({
               url: '/pages/index/index'

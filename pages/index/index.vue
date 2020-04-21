@@ -270,7 +270,7 @@ this.getNewProductList('refresh');
 			if (res) {
 				this.login(data);
 				console.log(data);
-				this.$db.set('userInfos', data.userInfo);
+				this.$db.set('userInfo', data.userInfo);
 				this.$db.set('token', data.tokenHead+data.token);
 				uni.switchTab({
 					url: '/pages/index/index'
@@ -478,7 +478,7 @@ this.getNewProductList('refresh');
 					});
 
 			}
-			var userInfo = this.$db.get('userInfos');
+			var userInfo = this.$db.get('userInfo');
 			if (userInfo) {
 
 				/*uni.getLocation({

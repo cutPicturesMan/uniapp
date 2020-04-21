@@ -152,7 +152,7 @@ export default {
 				}
 			});
 			console.log(datas)
-			//this.$db.set('userInfos', datas.data.data.userInfo);
+			//this.$db.set('userInfo', datas.data.data.userInfo);
 			//this.$db.set('token', datas.data.data.tokenHead+info.data.data.token);
 		},
 		/**
@@ -187,7 +187,7 @@ export default {
 					that.getAppletOpenId(params)
 				}
 			});
-			//this.$db.set('userInfos', datas.data.data.userInfo);
+			//this.$db.set('userInfo', datas.data.data.userInfo);
 			//this.$db.set('token', datas.data.data.tokenHead+info.data.data.token);
 		},
 		/**
@@ -243,7 +243,7 @@ export default {
 						});
 						that.login(res.data.data);
 						that.$db.set('token', res.data.data.tokenHead + res.data.data.token);
-						that.$db.set('userInfos', res.data.data.userInfo);
+						that.$db.set('userInfo', res.data.data.userInfo);
 
 						setTimeout(function(){
 							uni.switchTab({
@@ -369,7 +369,7 @@ export default {
 			if (data) {
 				console.log(data);
 				that.login(data)
-				uni.setStorageSync('userInfos', data.userInfo);
+				uni.setStorageSync('userInfo', data.userInfo);
 				uni.setStorageSync('token', data.tokenHead + data.token);
 				console.log(uni.getStorageSync('token'))
 				uni.switchTab({
@@ -406,7 +406,7 @@ export default {
 									if (res) {
 										console.log(res);
 										that.login(res.data.data)
-										uni.setStorageSync('userInfos', res.data.data.userInfo);
+										uni.setStorageSync('userInfo', res.data.data.userInfo);
 										uni.setStorageSync('token', res.data.data.tokenHead + res.data.data.token);
 
 										uni.switchTab({

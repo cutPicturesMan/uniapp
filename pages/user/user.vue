@@ -214,7 +214,7 @@ inputShowModal(feild) {
             			obj[that.feild] = that.inputContent;
             			Api.apiCall('post', Api.member.updateMember, obj);
             			that.$api.msg('修改成功');
-            			that.userInfos[that.feild] = that.inputContent
+            			that.userInfo[that.feild] = that.inputContent
 
             		},
 		async getData(){
@@ -227,7 +227,7 @@ inputShowModal(feild) {
 				let params = {  };
 				let data1 = await Api.apiCall('get', Api.index.userInfo, params);
 				this.userDetailInfo = data1.member;
-				uni.setStorageSync('userInfos', data1.member);
+				uni.setStorageSync('userInfo', data1.member);
 				console.log(this.userDetailInfo)
 				let couponList = data1.histories;
 				this.couponList = couponList;

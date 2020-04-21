@@ -60,7 +60,7 @@ export default {
 					if (e.confirm) {
 					 Api.apiCall('post', Api.index.logout, {});
 						this.logout();
-						this.$db.del('userInfos')
+						this.$db.del('userInfo')
 						setTimeout(() => {
 							uni.navigateBack();
 						}, 200);

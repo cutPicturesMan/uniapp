@@ -7,7 +7,7 @@
 			<dd>mallplus多租户商城</dd>
 		</dl>
 		<view class="img" v-if="hasLogin">
-			<img :src='userInfos.avatar' mode="">
+			<img :src='userInfo.avatar' mode="">
 		</view>
 		<view class="tgtit" >推广链接：<text class="tugurl">http://sishuquan.com?id=3228969</text></view>
 		<view class="sharbuttn">
@@ -41,7 +41,7 @@
 	export default {
 		data(){
 			return {
-				userInfos:[],
+				userInfo:[],
 				providerList:[],
 				sourceLink: 'https://s.click.taobao.com/t?e=m%3D2%26s%3DgQkxEEbF3yscQipKwQzePCperVdZeJviK7Vc7tFgwiFRAdhuF14FMbd6M4o5PmB8MMgx22UI05abwo5a89IxVtOLZnZELDrc18UdjXN7X1nGEYHyFjG%2B0dPKiTNZD70K4gqXglJHiXPLQPEJLPAWAV3WV7X8X8sdfIrCKoPZYrQGZ%2FstJHrpqDhoiH7Ccg41JPwiig1bxLM7kJwmAcM4EoXPJiNrCirAc9xMGrDd0rZMwwz6d1UZzQHXs3oS848GvzKk%2BEnhxzAqRqxcyk5Etpnc3TC3RPmuMzXmCitDxQQ%3D',
 				type:0,
@@ -49,8 +49,8 @@
 		},
 		onLoad() {
 			let userInfo = uni.getStorageSync('userInfo')
-			this.userInfos=userInfo;
-			console.log(this.userInfos)
+			this.userInfo=userInfo;
+			console.log(this.userInfo)
 			this.version = plus.runtime.version;
 			uni.getProvider({
 				service: 'share',

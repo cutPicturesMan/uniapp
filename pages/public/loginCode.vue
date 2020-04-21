@@ -99,7 +99,7 @@ async toLogin() {
 			if (data) {
 				console.log(data);
 				that.login(data)
-				uni.setStorageSync('userInfos', data.userInfo);
+				uni.setStorageSync('userInfo', data.userInfo);
 				uni.setStorageSync('token', data.tokenHead + data.token);
 				console.log(uni.getStorageSync('token'))
 				uni.switchTab({
@@ -188,7 +188,7 @@ async toLogin() {
 						});
 						that.login(res.data.data);
 						that.$db.set('token', res.data.data.tokenHead + res.data.data.token);
-						that.$db.set('userInfos', res.data.data.userInfo);
+						that.$db.set('userInfo', res.data.data.userInfo);
 
 						setTimeout(function() {
 							uni.switchTab({

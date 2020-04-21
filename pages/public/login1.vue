@@ -134,7 +134,7 @@ export default {
 				}
 			});
 			console.log(datas)
-			//this.$db.set('userInfos', datas.data.data.userInfo);
+			//this.$db.set('userInfo', datas.data.data.userInfo);
 			//this.$db.set('token', datas.data.data.tokenHead+info.data.data.token);
 		},
 		 appLogin() {
