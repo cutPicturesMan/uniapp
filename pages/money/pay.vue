@@ -152,44 +152,44 @@
 
     .price-box {
         background-color: #fff;
-        height: 265 upx;
+        height: 265upx;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        font-size: 28 upx;
+        font-size: 28upx;
         color: #909399;
 
         .price {
-            font-size: 50 upx;
+            font-size: 50upx;
             color: #303133;
-            margin-top: 12 upx;
+            margin-top: 12upx;
             &:before {
                 content: '￥';
-                font-size: 40 upx;
+                font-size: 40upx;
             }
         }
     }
 
     .pay-type-list {
-        margin-top: 20 upx;
+        margin-top: 20upx;
         background-color: #fff;
-        padding-left: 60 upx;
+        padding-left: 60upx;
 
         .type-item {
-            height: 120 upx;
-            padding: 20 upx 0;
+            height: 120upx;
+            padding: 20upx 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding-right: 60 upx;
-            font-size: 30 upx;
+            padding-right: 60upx;
+            font-size: 30upx;
             position: relative;
         }
 
         .icon {
-            width: 100 upx;
-            font-size: 52 upx;
+            width: 100upx;
+            font-size: 52upx;
         }
         .icon-erjiye-yucunkuan {
             color: #fe8e2e;
@@ -203,7 +203,7 @@
         .tit {
             font-size: $font-lg;
             color: $font-color-dark;
-            margin-bottom: 4 upx;
+            margin-bottom: 4upx;
         }
         .con {
             flex: 1;
@@ -218,13 +218,13 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 630 upx;
-        height: 80 upx;
-        margin: 80 upx auto 30 upx;
+        width: 630upx;
+        height: 80upx;
+        margin: 80upx auto 30upx;
         font-size: $font-lg;
         color: #fff;
         background-color: $base-color;
-        border-radius: 10 upx;
+        border-radius: 10upx;
         box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
     }
 
