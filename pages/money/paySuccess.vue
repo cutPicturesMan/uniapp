@@ -3,7 +3,7 @@
 		<text class="success-icon yticon icon-xuanzhong2"></text>
 		<text class="tit">支付成功</text>
 		<view class="result-mid red-price">
-			{{ paymentInfo.payAmount }}
+			￥{{ payAmount }}
 		</view>
 		<view class="btn-group">
 			<navigator url="/pages/order/order?status=0" open-type="redirect" class="mix-btn">查看订单</navigator>
@@ -17,19 +17,16 @@ import Api from '@/common/api';
 export default {
 	data() {
 		return {
-			paymentId: 0,
-			paymentInfo: {}, // 支付单详情
+			payAmount: 0, // 支付单详情
 			orderId: 0,
-			status: false
 		}
 	},
 	onLoad(options) {
-		if (options.order) {
-			let order  = JSON.parse(options.order)
-			this.orderId = order.id
-			this.paymentInfo = order
+		let { payAmount, orderId } = options;
+		if (orderId) {
+			this.payAmount = payAmount;
+			this.orderId = orderId;
 		}
-
 	},
 	methods: {}
 };

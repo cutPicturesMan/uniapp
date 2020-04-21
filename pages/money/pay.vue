@@ -36,7 +36,6 @@
                 </view>
                 <label class="radio">
                     <radio value="" color="#fa436a" :checked='payType == 3'/>
-
                 </label>
             </view>
         </view>
@@ -73,17 +72,16 @@
 			},
 			//确认支付
 			async confirm () {
-
 				if (this.payType == 2) {
 					let params = { 'orderId': this.orderInfo.id };
 
-// #ifdef APP-PLUS
+                    // #ifdef APP-PLUS
 					let appRes = await Api.apiCall('get', Api.order.appPay, params);
 					console.log(appRes);
 					// #endif
+
 					// #ifdef H5
 					//微信h5支付调用
-
 					let h5Res = await Api.apiCall('get', Api.order.wapPay, params);
 					console.log(h5Res);
 					if (h5Res) {
@@ -99,7 +97,6 @@
 
 					// #ifdef MP-WEIXIN
 					// 小程序支付调用
-
 					let res = await Api.apiCall('post', Api.order.weixinAppletPay, params);
 					console.log(res);
 					if (res) {
@@ -119,21 +116,25 @@
 								fail(JSON.stringify(err))
 							}
 						});
-
 					} else {
 						this.$api.msg('微信小程序失败');
 					}
 					// #endif
 				} else if (this.payType == 3) {
-					let params1 = {
-						'payAmount': this.orderInfo.payAmount,
-						'balance': this.userInfo.userInfo.blance,
-						'orderId': this.orderInfo.id
+					let params = {
+						payAmount: this.orderInfo.payAmount,
+						balance: this.userInfo.blance,
+						orderId: this.orderInfo.id
 					};
-					let data1 = await Api.apiCall('post', Api.order.balancePay, params1);
-					if (data1) {
+					let data = await Api.apiCall('post', Api.order.balancePay, params);
+					if (data) {
+						let str = Object.keys(params).map((key) => {
+							return `${key}=${params[key]}`;
+                        }).join('&');
+
+						// TODO 这里要区分渠道
 						uni.redirectTo({
-							url: '/pages/money/paySuccess'
+							url: `/pages/money/paySuccess?${str}`
 						})
 					} else {
 						this.$api.msg('余额支付失败');
