@@ -114,8 +114,8 @@ export default {
 					loadingType: 'loading',
 					orderList: []
 				}
-
-			]
+			],
+			isLoading: false
 		};
 	},
 
@@ -158,24 +158,39 @@ export default {
 				url: `/pages/order/orderDetail?id=${id}`
 			});
 		},
+		//swiper 切换
+		changeTab(e) {
+			this.tabCurrentIndex = e.target.current;
+			this.loadData('refresh');
+		},
+		//顶部tab点击
+		tabClick(index) {
+		    this.pageNum =  1;
+			this.loadData('refresh');
+			this.tabCurrentIndex = index;
+		},
 		//获取订单列表
 		async loadData(type = 'add', loading) {
 			//这里是将订单挂载到tab列表下
-			let index = this.tabCurrentIndex;
+			let { tabCurrentIndex: index, isLoading } = this;
 			let navItem = this.navList[index];
 			let status = navItem.status;
-
-
-			let url;
+			
+			if (isLoading) {
+				return false;
+			}
+			
 			if (!this.hasLogin) {
-				url = '/pages/public/login';
+				let url = '/pages/public/login';
 				uni.navigateTo({
 					url
 				});
 			} else {
-
+				this.isLoading = true;
 				let params = { pageNum: this.pageNum, status: status };
 				let data = await Api.apiCall('get', Api.order.orderList, params);
+				this.isLoading = false;
+				
 				let goodsList = data.records;
 				let orderList = goodsList.filter(item => {
 					//添加不同状态下订单的表现形式
@@ -206,23 +221,10 @@ export default {
 					}
 				}
 				this.pageNum = this.pageNum + 1;
-                				orderList.forEach(item => {
-                					navItem.orderList.push(item);
-                				});
+				orderList.forEach(item => {
+					navItem.orderList.push(item);
+				});
 			}
-		},
-
-		//swiper 切换
-		changeTab(e) {
-			this.tabCurrentIndex = e.target.current;
-			//this.pageNum =  1;
-			this.loadData('refresh');
-		},
-		//顶部tab点击
-		tabClick(index) {
-		    this.pageNum =  1;
-			this.loadData('refresh');
-			this.tabCurrentIndex = index;
 		},
 		//删除订单
 		async deleteOrder(index) {

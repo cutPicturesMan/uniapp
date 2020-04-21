@@ -48,8 +48,8 @@ import store from '@/store/index';
 export default {
 	data() {
 		return {
-			phone: '13146587722',
-			password: '123456789',
+			phone: '17328770592',
+			password: 'zz123456',
 			isWeiXin: 0,
 
 			logining: false,

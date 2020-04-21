@@ -265,6 +265,7 @@ export default {
 					title: res.data.msg,
 					icon: 'none'
 				});
+				// TODO wxapp下无$api方法
 				this.$api.msg(res.data.msg);
 			}
 
