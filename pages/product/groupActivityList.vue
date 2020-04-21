@@ -23,6 +23,19 @@
 			</view>
 		</view>
 		<uni-load-more :status="loadingType"></uni-load-more>
+
+		<view class="cate-mask" :class="cateMaskState === 0 ? 'none' : cateMaskState === 1 ? 'show' : ''" @click="toggleCateMask">
+			<view class="cate-content" @click.stop.prevent="stopPrevent" @touchmove.stop.prevent="stopPrevent">
+				<scroll-view scroll-y class="cate-list">
+					<view v-for="item in cateList" :key="item.id">
+						<view class="cate-item b-b two">{{ item.name }}</view>
+						<view v-for="tItem in item.child" :key="tItem.id" class="cate-item b-b" :class="{ active: tItem.id == cateId }" @click="changeCate(tItem)">
+							{{ tItem.name }}
+						</view>
+					</view>
+				</scroll-view>
+			</view>
+		</view>
 	</view>
 </template>
 

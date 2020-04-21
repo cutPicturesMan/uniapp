@@ -22,7 +22,7 @@
 				</view>
 			</view>
 		</view>
-
+		<uni-load-more :status="loadingType"></uni-load-more>
 
 		<view class="cate-mask" :class="cateMaskState === 0 ? 'none' : cateMaskState === 1 ? 'show' : ''" @click="toggleCateMask">
 			<view class="cate-content" @click.stop.prevent="stopPrevent" @touchmove.stop.prevent="stopPrevent">
@@ -87,7 +87,7 @@ export default {
 	},
 	//加载更多
 	onReachBottom() {
-		this.pageNum = this.pageNum + 1;
+		this.pageNum += 1;
 		this.loadData();
 	},
 	methods: {
@@ -115,18 +115,13 @@ export default {
 			} else {
 				this.loadingType = 'more';
 			}
-			let params;
-			if (this.cateId) {
-				params = { pageNum: this.pageNum, productCategoryId: this.cateId };
-				if (this.keyword) {
-					params = { pageNum: this.pageNum, productCategoryId: this.cateId, keyword: this.keyword };
-				}
-			}
-			if (this.keyword) {
-				params = { pageNum: this.pageNum, keyword: this.keyword };
-			} else {
-				params = { pageNum: this.pageNum };
-			}
+			let params = {
+				pageNum: this.pageNum,
+				pageSize: 10
+			};
+
+			this.keyword && (params.keyword = this.keyword);
+			this.productCategoryId && (params.productCategoryId = this.productCategoryId);
 
 			let list = await Api.apiCall('get', Api.goods.groupHotGoodsList, params);
 			let goodsList = list;
@@ -147,11 +142,10 @@ export default {
 				});
 			}
 
+			//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
+			this.loadingType = list.length < params.pageSize ? 'nomore' : 'more';
 			this.goodsList = this.goodsList.concat(goodsList);
 
-
-			//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
-			this.loadingType = this.goodsList.length > list.total ? 'nomore' : 'more';
 			if (type === 'refresh') {
 				if (loading == 1) {
 					uni.hideLoading();
