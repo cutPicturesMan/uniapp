@@ -8,8 +8,10 @@
 				 <view class="demand">满{{ item.minPoint }} 减 {{ item.amount }}</view>
 			</view>
 		</view>
-		<view class="get-btn" v-if="!types" :style="{color:color, borderColor:color, background:solid}" @click="acceptCoupon(item)" >立即领取</view>
-		<navigator class="get-btn" v-if="types" :style="{color:color, borderColor:color, background:solid}" :url='item.url' @click="acceptCoupon(item)">立即使用</navigator>
+		<view class="coupon-r">
+			<view class="get-btn" v-if="!types" :style="{color:color, borderColor:color, background:solid}" @click="acceptCoupon(item)" >立即领取</view>
+			<navigator class="get-btn" v-if="types" :style="{color:color, borderColor:color, background:solid}" :url='item.url' @click="acceptCoupon(item)">立即使用</navigator>
+		</view>
     </view>
 </template>
 
@@ -75,8 +77,12 @@ export default {
 <style lang='scss'>
 .coupon-item {
 	width:100%; height:auto; display:table; border-radius:10upx; padding:0 20upx; margin-top:22upx; border:1px solid #eeeeee; position:relative;
+	
+	display: flex;
 	.coupon-money {
 		width:465upx; height:auto; display:table; float:left; padding:26upx 0; border-style:none dotted none none; border-color:#eeeeee;
+		background-color: #fff;
+		padding-left: 20upx;
 
 		.nick { width:100%; height:50upx; line-height:30upx; font-size:$font-sm; color:$font-color-999; }
 		.tit { width:100%; height:50upx; line-height:50upx; font-size:$font-sm; color:$font-color-999; }
@@ -85,8 +91,15 @@ export default {
 		.layof { width:100%; height:48upx; line-height:30upx; font-size:44upx; color:#ff9000; font-weight:bold; }
 		.end_time { width:100%; height:30upx; line-height:30upx; font-size:$font-sm; color:$font-color-999; }
 	}
-	.get-btn { width:146upx; height:52upx; line-height:50upx; position:absolute; top:50%; right:26upx; margin-top:-26upx; text-align:center; border-radius:60upx; color:#ff9000; border:1px solid #ff9000; font-size:$font-sm; float:right; }
+	.coupon-r{
+		flex: 1;
+		background: linear-gradient(to right, #ec625c, #ee827f);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.get-btn { width:146upx; height:52upx; line-height:50upx; text-align:center; border-radius:60upx; color:#ff9000; border:1px solid #ff9000; font-size:$font-sm; float:right; }
 }
-.coupon-item:after { width:40upx; height:20upx; position:absolute; left:460upx; top:-1px; border-radius:0 0 40upx 40upx; content:""; display:block; background:$bgcolor_white; border:1px solid #eeeeee; border-top:0px; }
-.coupon-item:before { width:40upx; height:20upx; position:absolute; left:460upx; bottom:-1px; border-radius:40upx 40upx 0 0; content:""; display:block; background:$bgcolor_white; border:1px solid #eeeeee; border-bottom:0px; }
+.coupon-item:after { width:40upx; height:20upx; position:absolute; left:460upx; top:-1px; border-radius:0 0 40upx 40upx; content:""; display:block; background: #f5f5f5; border:1px solid #eeeeee; border-top:0px; }
+.coupon-item:before { width:40upx; height:20upx; position:absolute; left:460upx; bottom:-1px; border-radius:40upx 40upx 0 0; content:""; display:block; background: #f5f5f5; border:1px solid #eeeeee; border-bottom:0px; }
 </style>
