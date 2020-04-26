@@ -6,8 +6,8 @@ export default {
 	// ESURI: 'http://localhost:8081/api/',
 	// BASEURI:'http://101.132.195.75:8081/api/',
 	// ESURI: 'http://101.132.195.75:8081/api/',
-	BASEURI:'http://api.iele.co/api/api/',
-	ESURI: 'http://192.168.1.169:8081/api/',
+	BASEURI:'http://api.iele.co/app/api/',
+	ESURI: 'http://api.iele.co/app/',
 	h5Appid: 'wxb4660f37187c0b8e',
 
 	es: {
@@ -17,95 +17,99 @@ export default {
 	 * 接口名称
 	 */
 	index: {
-		submitLocaltion:'single/home/submitLocaltion',
+		submitLocaltion:'home/submitLocaltion',
 		getAppletOpenId: 'applet/getAppletOpenId', // 获取openId
 		getWxPhone: 'applet/getWxPhone', // 获取手机号
 
 		appletLogin_by_weixin: 'applet/login_by_weixin1', // 登录(手机号:phone 密码:password)
-		login: 'single/home/login', // 登录(手机号:phone 密码:password)
-	    logout: 'single/home/logout', //
-		appLogin : 'single/home/appLogin',
-		simpleReg: 'single/home/simpleReg', // 登录(手机号:phone 密码:password)
-		home: 'single/home/content', //首页展示
-		home1: 'single/home/content1', //首页展示
-		homeFlashPromotionList: 'single/home/homeFlashPromotionList', // 秒杀列表
-		bannerList: 'single/home/bannerList', // 首页banner
-		updatePassword: 'single/home/updatePassword', // 修改密码
-		loginByCode: 'single/home/loginByCode', // 手机和验证码登录
-		reg: 'single/home/reg', // 注册
-		sendCodes: 'single/home/sms/codes', // 获取验证码
-		acceptCoupon: 'single/sms/add', // 获取优惠券
-		listMemberCoupon: 'single/sms/listMemberCoupon', // 优惠券列表
-		couponList: 'single/home/couponList', //  优惠券
-		selectNotRecive: 'single/home/selectNotRecive', //  可领取的优惠券
-		userInfo: 'single/home/userInfo', //  用户信息
-		userSampleInfo: 'single/home/userSampleInfo', //  用户信息
-		groupActivityDetail: 'single/sms/group.activity.getdetial', // 查询团购详情信息
-		groupActivityList: 'single/sms/groupActivityList', // 查询商品团购列表
-		logs: 'single/home/logs', //  记录日志
+		login: 'home/login', // 登录(手机号:phone 密码:password)
+	    logout: 'home/logout', //
+		appLogin : 'home/appLogin',
+		simpleReg: 'home/simpleReg', // 登录(手机号:phone 密码:password)
+		home: 'home/content', //首页展示
+		home1: 'home/content1', //首页展示
+		homeFlashPromotionList: 'home/homeFlashPromotionList', // 秒杀列表
+		bannerList: 'home/bannerList', // 首页banner
+		updatePassword: 'home/updatePassword', // 修改密码
+		loginByCode: 'home/loginByCode', // 手机和验证码登录
+		reg: 'home/reg', // 注册
+		sendCodes: 'home/sms/codes', // 获取验证码
+		acceptCoupon: 'sms/add', // 获取优惠券
+		listMemberCoupon: 'sms/listMemberCoupon', // 优惠券列表
+		couponList: 'home/couponList', //  优惠券
+		selectNotRecive: 'home/selectNotRecive', //  可领取的优惠券
+		userInfo: 'home/userInfo', //  用户信息
+		userSampleInfo: 'home/userSampleInfo', //  用户信息
+		groupActivityDetail: 'sms/group.activity.getdetial', // 查询团购详情信息
+		groupActivityList: 'sms/groupActivityList', // 查询商品团购列表
+		logs: 'home/logs', //  记录日志
 
 	},
 	member: {
-		getInviteData: 'single/user/getInviteData',
-		inviteUser: 'single/user/inviteUser',
-		inviteMoney: 'single/user/inviteMoney',
-		currentMember: 'single/user/currentMember',
-		updateMember: 'single/user/updateMember',
-		resetPassword: 'single/user/resetPassword',
-		schoolList: 'single/user/school/list', // 查询学校列表
-		schoolDetail: 'single/user/schoolDetail', // 查询拼团商品详情信息
-		getAreaByPid: 'single/user/getAreaByPid', // 根据pid查询区域
-		bindSchool: 'single/user/bindSchool', // 会员绑定学校
-		bindArea: 'single/user/bindArea', // 会员绑定区域
-		applyStore: 'single/store/applyStore', // 商户入驻
-		storeDetail: 'single/store/detail', // 商户详情
-		storeDetail1: 'single/store/detail1', // 商户详情 带用户
-		store: 'single/store/home', // 商户主页
-		storeList: 'single/store/store/list', // 商户列表
+		getInviteData: 'user/getInviteData',
+		inviteUser: 'user/inviteUser',
+		inviteMoney: 'user/inviteMoney',
+		currentMember: 'user/currentMember',
+		updateMember: 'user/updateMember',
+		resetPassword: 'user/resetPassword',
+		schoolList: 'user/school/list', // 查询学校列表
+		schoolDetail: 'user/schoolDetail', // 查询拼团商品详情信息
+		getAreaByPid: 'user/getAreaByPid', // 根据pid查询区域
+		bindSchool: 'user/bindSchool', // 会员绑定学校
+		bindArea: 'user/bindArea', // 会员绑定区域
+
+		//这个暂时没有相关接口，这个用于以后多商户版本
+		//applyStore: 'single/store/applyStore', // 商户入驻
+		//storeDetail: 'single/store/detail', // 商户详情
+		//storeDetail1: 'single/store/detail1', // 商户详情 带用户
+		//store: 'single/store/home', // 商户主页
+		//storeList: 'single/store/store/list', // 商户列表
 
 	},
-	build: {
-		getBuildNoticeByPage: 'single/build/getBuildNoticeByPage', // 所有社区和房间
-		getBuildWuyeCompanyByPage: 'single/build/getBuildWuyeCompanyByPage', // 所有社区和房间
-		groupList: 'single/build/groupList', // 所有社区和房间
-		communityList: 'single/build/communityList', // 所有社区和房间
-		floorList: 'single/build/floorList', // 所有社区和房间
-		allCommunity: 'single/build/allCommunity', // 所有社区和房间
-		bindCommunity: 'single/build/bindCommunity', // 绑定小区和房间
-		home: 'single/build/home', // 首页内容页信息展示
-		applyCommunity: 'single/build/applyCommunity', // 社区入驻
+	// 整个模块全部去掉
+	// build: {
+	// 	getBuildNoticeByPage: 'single/build/getBuildNoticeByPage', // 所有社区和房间
+	// 	getBuildWuyeCompanyByPage: 'single/build/getBuildWuyeCompanyByPage', // 所有社区和房间
+	// 	groupList: 'single/build/groupList', // 所有社区和房间
+	// 	communityList: 'single/build/communityList', // 所有社区和房间
+	// 	floorList: 'single/build/floorList', // 所有社区和房间
+	// 	allCommunity: 'single/build/allCommunity', // 所有社区和房间
+	// 	bindCommunity: 'single/build/bindCommunity', // 绑定小区和房间
+	// 	home: 'single/build/home', // 首页内容页信息展示
+	// 	applyCommunity: 'single/build/applyCommunity', // 社区入驻
 
 
-	},
+	// },
 	goods: {
-		goodsPromoto: 'single/sms/detail', // 单个商品的优惠详情
-		secskillDetail: 'single/pms/secskill/detail', // 查询秒杀商品详情信息
-		groupGoodsDetail: 'single/pms/goodsGroup/detail', // 查询拼团商品详情信息
-		groupGoodsList: 'single/pms/groupGoods/list', // 查询拼团商品列表
-		groupHotGoodsList: 'single/pms/groupHotGoods/list', // 查询生效拼团商品列表
-		giftDetail: 'single/pms/gift/detail', // 查询商品详情信息
-		giftList: 'single/pms/gift/list', // 查询商品列表
-		paiMaiDetail: 'single/pms/paimai/detail', // 查询商品详情信息
-		updatePaiMai: 'single/pms/updatePaiMai', // 参与竞价
-		typeGiftList: 'single/pms/typeGiftList', //查询商品类型下的商品列表
-		addView: 'single/pms/addView', // 查询商品详情信息
-		viewList: 'single/pms/viewList', // 查询商品列表
+		goodsPromoto: 'sms/detail', // 单个商品的优惠详情
+		secskillDetail: 'pms/secskill/detail', // 查询秒杀商品详情信息
+		groupGoodsDetail: 'pms/goodsGroup/detail', // 查询拼团商品详情信息
+		groupGoodsList: 'pms/groupGoods/list', // 查询拼团商品列表
+		groupHotGoodsList: 'pms/groupHotGoods/list', // 查询生效拼团商品列表
+		giftDetail: 'pms/gift/detail', // 查询商品详情信息
+		giftList: 'pms/gift/list', // 查询商品列表
+		//去掉拍卖
+		//paiMaiDetail: 'pms/paimai/detail', // 查询商品详情信息
+		//updatePaiMai: 'pms/updatePaiMai', // 参与竞价
+		typeGiftList: 'pms/typeGiftList', //查询商品类型下的商品列表
+		addView: 'pms/addView', // 查询商品详情信息
+		viewList: 'pms/viewList', // 查询商品列表
 
-		goodsDetail: 'single/pms/goods/detail', // 查询商品详情信息
-		goodsList: 'single/pms/goods/list', // 查询商品列表
-		categoryList: 'single/pms/productCategory/list', // 查询商品分类列表
-		createGoods: 'single/pms/createGoods', //创建商品
-		brandList: 'single/pms/brand/list', // 根据条件查询所有品牌表列表
-		consultList: 'single/pms/consult/list', // 取某个商品的评价
-		categoryAndGoodsList: 'single/pms/categoryAndGoodsList/list', // 查询商品分类列表(带商品)
-		typeGoodsList: 'single/pms/typeGoodsList', //查询商品类型下的商品列表
-		typeList: 'single/pms/typeList', //查询商品类型下的商品列表
+		goodsDetail: 'pms/goods/detail', // 查询商品详情信息
+		goodsList: 'pms/goods/list', // 查询商品列表
+		categoryList: 'pms/productCategory/list', // 查询商品分类列表
+		createGoods: 'pms/createGoods', //创建商品
+		brandList: 'pms/brand/list', // 根据条件查询所有品牌表列表
+		consultList: 'pms/consult/list', // 取某个商品的评价
+		categoryAndGoodsList: 'pms/categoryAndGoodsList/list', // 查询商品分类列表(带商品)
+		typeGoodsList: 'pms/typeGoodsList', //查询商品类型下的商品列表
+		typeList: 'pms/typeList', //查询商品类型下的商品列表
 
-		getGoodsTypes: 'single/pms/getGoodsTypes', // 查询分类
+		getGoodsTypes: 'pms/getGoodsTypes', // 查询分类
 
-		recommendBrand: 'single/pms/recommendBrand/list', // 查询首页推荐品牌
-		newProductList: 'single/pms/newProductList/list', //查询首页新品
-		hotProductList: 'single/pms/hotProductList/list', // 查询热销商品
+		recommendBrand: 'pms/recommendBrand/list', // 查询首页推荐品牌
+		newProductList: 'pms/newProductList/list', //查询首页新品
+		hotProductList: 'pms/hotProductList/list', // 查询热销商品
 		listCollect: 'collection/listCollect', // 显示关注列表
 		deleteCollect: 'collection/delete', // 删除收藏中的某个商品
 		favoriteSave: 'collection/favoriteSave', // 添加/商品收藏
@@ -117,23 +121,23 @@ export default {
 
 	},
 	order: {
-	 getRefundReason: 'single/oms/order/getRefundReason', // 查询售后原因
-    	saveOmsOrderReturnApply: 'single/oms/saveOmsOrderReturnApply', // 添加售后
-    	    aftersaleslist: 'single/oms/order/aftersaleslist', // 查询售后列表
-        	aftersalesinfo: 'single/oms/aftersalesinfo', // 查询售后详情
-		addGroup: 'single/oms/addGroup', // 发起拼团
-		acceptGroup: 'single/oms/acceptGroup', // 提交拼团
-		sampleOrderList: 'single/oms/sampleOrderList', // 查询订单列表
-		orderList: 'single/oms/order/list', // 查询订单列表
-		orderDetail: 'single/oms/detail', // 查询订单列表
-		preGroupActivityOrder: 'single/oms/preGroupActivityOrder', // 预览订单团购
-		bookOrder: 'single/oms/generateOrder', //  生成订单
-		preOrder: 'single/oms/submitPreview', // 预览订单
-		closeOrder: 'single/oms/closeOrder', // 关闭订单
-		confimDelivery: 'single/oms/confimDelivery', //确认收货
-		applyRefund: 'single/oms/applyRefund', // 申请退款
-		logisticbyapi: 'single/oms/logisticbyapi', // 查看物流
-		orderevaluate: 'single/oms/orderevaluate', //订单评价
+	 getRefundReason: 'oms/order/getRefundReason', // 查询售后原因
+    	saveOmsOrderReturnApply: 'oms/saveOmsOrderReturnApply', // 添加售后
+    	    aftersaleslist: 'oms/order/aftersaleslist', // 查询售后列表
+        	aftersalesinfo: 'oms/aftersalesinfo', // 查询售后详情
+		addGroup: 'oms/addGroup', // 发起拼团
+		acceptGroup: 'oms/acceptGroup', // 提交拼团
+		sampleOrderList: 'oms/sampleOrderList', // 查询订单列表
+		orderList: 'oms/order/list', // 查询订单列表
+		orderDetail: 'oms/detail', // 查询订单列表
+		preGroupActivityOrder: 'oms/preGroupActivityOrder', // 预览订单团购
+		bookOrder: 'oms/generateOrder', //  生成订单
+		preOrder: 'oms/submitPreview', // 预览订单
+		closeOrder: 'oms/closeOrder', // 关闭订单
+		confimDelivery: 'oms/confimDelivery', //确认收货
+		applyRefund: 'oms/applyRefund', // 申请退款
+		logisticbyapi: 'oms/logisticbyapi', // 查看物流
+		orderevaluate: 'oms/orderevaluate', //订单评价
 		addCart: 'cart/addCart', // 添加商品到购物车
 		cartList: 'cart/list', // 获取某个会员的购物车列表
 		promotionCartList: 'cart/list/promotion', // 获取某个会员的购物车列表,包括促销信息
@@ -182,14 +186,14 @@ export default {
 
 	},
 	cms: {
-		subjectList: 'single/cms/subject/list', //  查询文章列表
-		subjectCategoryList: 'single/cms/subjectCategory/list', //  查询文章分类列表
-		subjectCommentList: 'single/cms/subjectComment/list', //  查询文章评论列表
-		recommendSubjectList: 'single/cms/recommendSubjectList/list', //查询首页推荐文章
-		topicList: 'single/cms/topic/list', //  查询专题列表
-		topicDetail: 'single/cms/topic/detail', // 专题详情
-		subjectDetail: 'single/cms/subject/detail', // 文章详情
-		createSubject: 'single/cms/createSubject', // 创建文章
+		subjectList: 'cms/subject/list', //  查询文章列表
+		subjectCategoryList: 'cms/subjectCategory/list', //  查询文章分类列表
+		subjectCommentList: 'cms/subjectComment/list', //  查询文章评论列表
+		recommendSubjectList: 'cms/recommendSubjectList/list', //查询首页推荐文章
+		topicList: 'cms/topic/list', //  查询专题列表
+		topicDetail: 'cms/topic/detail', // 专题详情
+		subjectDetail: 'cms/subject/detail', // 文章详情
+		createSubject: 'cms/createSubject', // 创建文章
 	},
 
 	/**

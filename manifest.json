@@ -99,7 +99,8 @@
         "usingComponents" : true,
         "appid" : "wx5b3d23848b3c0a8e",
         "setting" : {
-            "urlCheck" : false
+            "urlCheck" : false,
+            "minified" : true
         },
         "permission" : {}
     },
