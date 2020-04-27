@@ -49,7 +49,8 @@
 				<image src="/static/temp/c7.png"></image>
 				<text>限时秒杀</text>
 			</view>
-			<view class="cate-item" @click="navToTabPage('/pages/product/paiMaiList')">
+			<!--去掉拍卖-->
+			<view class="cate-item" @click="navToTabPage('/pages/product/paiMaiList')" v-if="false">
 				<image src="/static/temp/c8.png"></image>
 				<text>拍卖商品</text>
 			</view>
@@ -71,7 +72,8 @@
 				<image src="/static/temp/c7.png"></image>
 				<text>限时秒杀</text>
 			</view>
-			<view class="cate-item" @click="navToTabPage('/pages/product/paiMaiList')">
+			<!--去掉拍卖-->
+			<view class="cate-item" @click="navToTabPage('/pages/product/paiMaiList')" v-if="false">
 				<image src="/static/temp/c8.png"></image>
 				<text>拍卖商品</text>
 			</view>

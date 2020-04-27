@@ -111,8 +111,10 @@
 				<list-cell icon="icon-pinglun-copy" iconColor="#ee883b" title="晒单" tips="晒单抢红包"></list-cell>-->
 				<list-cell icon="icon-shoucang_xuanzhongzhuangtai" iconColor="#54b4ef" title="我的收藏" @eventClick="navTo('/pages/user/collect')"></list-cell>
 
-				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" v-if="!userDetailInfo.roomNums" title="绑定社区" @eventClick="navTo('../../pagesA/build/bindCommunity')"></list-cell>
-				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" v-if="userDetailInfo.roomNums" title="社区主页" @eventClick="navTo('../../pagesA/build/community')"></list-cell>
+				<!--暂时隐藏-->
+				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" v-if="!userDetailInfo.roomNums && false" title="绑定社区" @eventClick="navTo('../../pagesA/build/bindCommunity')"></list-cell>
+				<!--暂时隐藏-->
+				<list-cell icon="icon-userJoin cgtt" iconColor="#0e68d7" v-if="userDetailInfo.roomNums && false" title="社区主页" @eventClick="navTo('../../pagesA/build/community')"></list-cell>
 					<list-cell icon="icon-pinglun-copy" iconColor="#0e68d7" title="我的邀请码" :tips="userDetailInfo.id"  @eventClick="navTo('/pages/user/invite')"></list-cell>
 					<list-cell icon="icon-pinglun-copy" iconColor="#0e68d7" v-if="!userDetailInfo.invitecode" title="推荐邀请码" @eventClick="inputShowModal('invitecode')"></list-cell>
 				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="系统设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>

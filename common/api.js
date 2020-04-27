@@ -121,9 +121,9 @@ export default {
 
 	},
 	order: {
-	 getRefundReason: 'oms/order/getRefundReason', // 查询售后原因
+	  getRefundReason: 'oms/order/getRefundReason', // 查询售后原因
     	saveOmsOrderReturnApply: 'oms/saveOmsOrderReturnApply', // 添加售后
-    	    aftersaleslist: 'oms/order/aftersaleslist', // 查询售后列表
+    aftersaleslist: 'oms/order/aftersaleslist', // 查询售后列表
         	aftersalesinfo: 'oms/aftersalesinfo', // 查询售后详情
 		addGroup: 'oms/addGroup', // 发起拼团
 		acceptGroup: 'oms/acceptGroup', // 提交拼团
