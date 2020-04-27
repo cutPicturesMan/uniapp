@@ -109,6 +109,10 @@ export default {
 		async loadData() {
 			let params = {};
 			let list = await Api.apiCall('get', Api.order.cartList, params);
+
+			!list.cartItemList && (list.cartItemList = []);
+			!list.promoteAmount && (list.promoteAmount = 0);
+
 			// let list = await this.$api.json('cartList');
 			let cartList = list.cartItemList.map(item => {
 				item.checked = '1';
