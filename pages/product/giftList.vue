@@ -147,10 +147,10 @@ export default {
 				});
 			}
 
-			this.goodsList = this.goodsList.concat(goodsList);
-
 			//判断是否还有下一页，有是more  没有是nomore(测试数据判断大于20就没有了)
-			this.loadingType = this.goodsList.length > list.total ? 'nomore' : 'more';
+			this.loadingType = list.records.length < list.size ? 'nomore' : 'more';
+			this.goodsList = this.goodsList.concat(goodsList);
+			
 			if (type === 'refresh') {
 				if (loading == 1) {
 					uni.hideLoading();
