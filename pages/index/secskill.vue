@@ -1,57 +1,57 @@
 <template>
-	<view class="container">
-		<!-- 小程序头部兼容 -->
-		<!-- #ifdef MP -->
-		<view class="mp-search-box" @click="search()"><input class="ser-input" type="text" value="输入关键字搜索" /></view>
-		<!-- #endif -->
+    <view class="container">
+        <!-- 小程序头部兼容 -->
+        <!-- #ifdef MP -->
+        <view class="mp-search-box" @click="search()"><input class="ser-input" type="text" value="输入关键字搜索" /></view>
+        <!-- #endif -->
 
-		<!-- 头部轮播 -->
-		<view class="carousel-section">
-			<!-- 标题栏和状态栏占位符 -->
-			<view class="titleNview-placing"></view>
-			<!-- 背景色区域 -->
-			<view class="titleNview-background" :style="{ backgroundColor: titleNViewBackground }"></view>
-			<swiper class="carousel" circular @change="swiperChange">
-				<swiper-item v-for="(item, index) in carouselList" :key="index" class="carousel-item" @click="navToDetailPage({ title: '轮播广告' })">
-					<image :src="item.pic" />
-				</swiper-item>
-			</swiper>
-			<!-- 自定义swiper指示器 -->
-			<view class="swiper-dots">
-				<text class="num">{{ swiperCurrent + 1 }}</text>
-				<text class="sign">/</text>
-				<text class="num">{{ swiperLength }}</text>
-			</view>
-		</view>
-
-		<view class="ad-1"><image src="/static/temp/ad1.jpg" mode="scaleToFill"></image></view>
-
-		<!-- 秒杀楼层 -->
-		<view class="seckill-section m-t" v-if="item1.flashSessionInfoList.length > 0" v-for="(item1, index1) in groupHotGoodsList" :key="index1">
-        <view class="s-header" >
-        <image class="s-img" src="/static/temp/secskill-img.jpg" mode="widthFix"></image>
-        <text class="tip">{{ item1.flashName }}</text>
+        <!-- 头部轮播 -->
+        <view class="carousel-section">
+            <!-- 标题栏和状态栏占位符 -->
+            <view class="titleNview-placing"></view>
+            <!-- 背景色区域 -->
+            <view class="titleNview-background" :style="{ backgroundColor: titleNViewBackground }"></view>
+            <swiper class="carousel" circular @change="swiperChange">
+                <swiper-item v-for="(item, index) in carouselList" :key="index" class="carousel-item" @click="navToDetailPage({ title: '轮播广告' })">
+                    <image :src="item.pic" />
+                </swiper-item>
+            </swiper>
+            <!-- 自定义swiper指示器 -->
+            <view class="swiper-dots">
+                <text class="num">{{ swiperCurrent + 1 }}</text>
+                <text class="sign">/</text>
+                <text class="num">{{ swiperLength }}</text>
+            </view>
         </view>
-		<view v-if="item2.productList.length > 0" v-for="(item2, index2) in item1.flashSessionInfoList" :key="index1">
-			<view class="s-header" >
-				<text class="tip">{{ item2.startTime }}</text>
-				<text class="tip">～</text>
-				<text class="tip">{{ item2.endTime }}</text>
 
-			</view>
-			<scroll-view class="floor-list" scroll-x>
-				<view class="scoll-wrapper">
-					<view v-for="(item, index) in item2.productList" :key="index" class="floor-item" @click="navToDetailPage(item)">
-						<image :src="item.productImg" mode="aspectFill"></image>
-						<text class="title clamp">{{ item.productName }}</text>
-						<text class="price clamp">秒杀价 ￥{{ item.flashPromotionPrice }}</text>
-						<text class="price clamp">原价 ￥{{ item.productPrice }}</text>
-					</view>
-				</view>
-			</scroll-view>
-		  </view>
-		</view>
-	</view>
+        <view class="ad-1"><image src="/static/temp/ad1.jpg" mode="scaleToFill"></image></view>
+
+        <!-- 秒杀楼层 -->
+        <view class="seckill-section m-t" v-if="item1.flashSessionInfoList.length > 0" v-for="(item1, index1) in groupHotGoodsList" :key="index1">
+            <view class="s-header">
+                <image class="s-img" src="/static/temp/secskill-img.jpg" mode="widthFix"></image>
+                <text class="tip">{{ item1.flashName }}</text>
+            </view>
+            <view v-if="item2.productList.length > 0" v-for="(item2, index2) in item1.flashSessionInfoList" :key="index1">
+                <view class="s-header" >
+                    <text class="tip">{{ item2.startTime }}</text>
+                    <text class="tip">～</text>
+                    <text class="tip">{{ item2.endTime }}</text>
+
+                </view>
+                <scroll-view class="floor-list" scroll-x>
+                    <view class="scoll-wrapper">
+                        <view v-for="(item, index) in item2.productList" :key="index" class="floor-item" @click="navToDetailPage(item)">
+                            <image :src="item.productImg" mode="aspectFill"></image>
+                            <text class="title clamp">{{ item.productName }}</text>
+                            <text class="price clamp">秒杀价 ￥{{ item.flashPromotionPrice }}</text>
+                            <text class="price clamp">原价 ￥{{ item.productPrice }}</text>
+                        </view>
+                    </view>
+                </scroll-view>
+            </view>
+        </view>
+    </view>
 </template>
 
 <script>
