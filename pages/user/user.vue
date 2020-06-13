@@ -153,18 +153,17 @@
 				},
 
 				couponList: [],
-				viewList: []
+				viewList: [],
+				isUserLoading: false,
+				isHistoryLoading: false,
 			};
 		},
-
 		async onLoad() {
 			this.getData()
-
 		},
 		async onShow() {
 			this.getData()
 		},
-
 		// #ifndef MP
 		onNavigationBarButtonTap(e) {
 			const index = e.index;
@@ -225,22 +224,33 @@
 			},
 			// 获取用户信息
 			async getuserinfo() {
-
-				let params = {};
-				let data1 = await Api.apiCall('get', Api.index.userInfo, params);
-				this.userDetailInfo = data1.member;
-				uni.setStorageSync('userInfo', data1.member);
-				console.log(this.userDetailInfo)
-				let couponList = data1.histories;
-				this.couponList = couponList;
-
+				try {
+					if (this.isUserLoading) return false;
+					this.isUserLoading = true;
+					
+					let data = await Api.apiCall('get', Api.index.userInfo);
+					this.isUserLoading = false;
+					
+					this.userDetailInfo = data.member;
+					this.couponList = data.histories;
+					uni.setStorageSync('userInfo', data.member);
+				} catch (e) {
+					
+				}
 			},
 			// 获取浏览历史
 			async getHistory() {
 				if (this.hasLogin) {
-					let params = {};
-					let data = await Api.apiCall('get', Api.goods.viewList, params);
-					this.viewList = data.result;
+					try {
+						if (this.isHistoryLoading) return false;
+						this.isHistoryLoading = true;
+						
+						let data = await Api.apiCall('get', Api.goods.viewList);
+						this.isHistoryLoading = false;
+						this.viewList = data.result;
+					} catch (e) {
+					
+					}
 				}
 			},
 

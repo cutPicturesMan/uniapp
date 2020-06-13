@@ -203,7 +203,7 @@ export default {
 	 * data		   所需传递参数
 	 * load		   是否需要loading
 	 */
-	async apiCall(method, endpoint, data, load) {
+	async apiCall(method, endpoint, data = {}, load) {
 		if (load) {
 			uni.showLoading({
 				title: '请稍候',
@@ -244,7 +244,7 @@ export default {
 				url: `/pages/public/login`
 			})
 		}
-		if (res.data.msg == '请先登录' || res.data.code == 100) {
+		if (res.data.msg == '请先登录' || [100, 401].indexOf(res.data.code) > -1) {
 			console.log(res.data);
 			uni.showToast({
 				title: '请先登录',
