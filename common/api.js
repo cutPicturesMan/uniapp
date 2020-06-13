@@ -1,12 +1,12 @@
 import store from '../store/index';
 export default {
-// qq 951449465
-	 //BASEURI: 'http://www.yjlive.cn/api/api/',
+	// qq 951449465
+	//BASEURI: 'http://www.yjlive.cn/api/api/',
 	// BASEURI:'http://localhost:8081/api/',
 	// ESURI: 'http://localhost:8081/api/',
 	// BASEURI:'http://101.132.195.75:8081/api/',
 	// ESURI: 'http://101.132.195.75:8081/api/',
-	BASEURI:'http://api.iele.co/app/api/',
+	BASEURI: 'http://api.iele.co/app/api/',
 	ESURI: 'http://api.iele.co/app/',
 	h5Appid: 'wxb4660f37187c0b8e',
 
@@ -17,14 +17,14 @@ export default {
 	 * 接口名称
 	 */
 	index: {
-		submitLocaltion:'home/submitLocaltion',
+		submitLocaltion: 'home/submitLocaltion',
 		getAppletOpenId: 'applet/getAppletOpenId', // 获取openId
 		getWxPhone: 'applet/getWxPhone', // 获取手机号
 
 		appletLogin_by_weixin: 'applet/login_by_weixin1', // 登录(手机号:phone 密码:password)
 		login: 'home/login', // 登录(手机号:phone 密码:password)
-	    logout: 'home/logout', //
-		appLogin : 'home/appLogin',
+		logout: 'home/logout', //
+		appLogin: 'home/appLogin',
 		simpleReg: 'home/simpleReg', // 登录(手机号:phone 密码:password)
 		home: 'home/content', //首页展示
 		home1: 'home/content1', //首页展示
@@ -121,10 +121,10 @@ export default {
 
 	},
 	order: {
-	  getRefundReason: 'oms/order/getRefundReason', // 查询售后原因
-    	saveOmsOrderReturnApply: 'oms/saveOmsOrderReturnApply', // 添加售后
-    aftersaleslist: 'oms/order/aftersaleslist', // 查询售后列表
-        	aftersalesinfo: 'oms/aftersalesinfo', // 查询售后详情
+		getRefundReason: 'oms/order/getRefundReason', // 查询售后原因
+		saveOmsOrderReturnApply: 'oms/saveOmsOrderReturnApply', // 添加售后
+		aftersaleslist: 'oms/order/aftersaleslist', // 查询售后列表
+		aftersalesinfo: 'oms/aftersalesinfo', // 查询售后详情
 		addGroup: 'oms/addGroup', // 发起拼团
 		acceptGroup: 'oms/acceptGroup', // 提交拼团
 		sampleOrderList: 'oms/sampleOrderList', // 查询订单列表
@@ -215,26 +215,22 @@ export default {
 		let fullurl = this.BASEURI + endpoint;
 		var contentType = 'application/x-www-form-urlencoded';
 
-		data.storeid=1;
-    	data.authorization1=token;
-		//console.log(endpoint);
+		data.storeid = 1;
+		data.authorization1 = token;
 		let [error, res] = await uni.request({
 			url: fullurl,
 			data: data,
 			method: method,
 			header: {
 				'storeid': 1,
-				//'Content-Type': 'application/x-www-form-urlencoded',
-				 'content-type': contentType,
-				// 'authorization1': Authorization || ''
+				'content-type': contentType,
 			},
 		});
 		if (load) {
 			uni.hideLoading();
 		}
-	console.log(res);
-	console.log(error);
-		if (undefined==res||'undefined'==res){
+
+		if (undefined == res || 'undefined' == res) {
 			uni.navigateTo({
 				url: `/pages/index/index`
 			})
@@ -262,17 +258,12 @@ export default {
 		if (res.data.code == 200) {
 			return res.data.data;
 		} else {
-			console.log(res.data);
-			if (res.data && res.data.msg){
-
+			if (res.data && res.data.msg) {
 				uni.showToast({
 					title: res.data.msg,
 					icon: 'none'
 				});
-				// TODO wxapp下无$api方法
-				this.$api.msg(res.data.msg);
 			}
-
 		}
 	},
 	/**
