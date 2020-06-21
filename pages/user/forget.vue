@@ -321,7 +321,7 @@ import Api from '@/common/api';
 	}
 	.container{
 		padding-top: 55px;
-		position:relative;
+		position:relative; 
 		width: 100vw;
 		height: 100vh;
 		overflow: hidden;

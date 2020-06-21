@@ -524,7 +524,9 @@ this.getNewProductList('refresh');
 		},
 		//详情页
         		navToDetailPageL(url) {
-        			window.location.href =url;
+        			if (url) {
+						window.location.href =url;
+					}
         		},
 		//详情页
         		navToCouponDetailPage(item) {

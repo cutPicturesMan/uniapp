@@ -290,6 +290,9 @@ console.log(data)
 				});
 			}else{
 			  this.$common.errorToShow('商品套餐不存在');
+			  setTimeout(() => {
+				  uni.navigateBack();
+			  }, 1500)
 			}
 			if (this.hasLogin) {
 				let params = { goodsId: ops.id };
