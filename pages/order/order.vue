@@ -131,19 +131,19 @@ export default {
 	onPageScroll(e) {
 		//兼容iOS端下拉时顶部漂移
 		if (e.scrollTop >= 0) {
-			this.headerPosition = 'fixed';
+			this.headerPosition != 'fixed' && (this.headerPosition = 'fixed');
 		} else {
-			this.headerPosition = 'absolute';
+			this.headerPosition != 'absolute' && (this.headerPosition = 'absolute');
 		}
 	},
 	//下拉刷新
-	onPullDownRefresh() {
-		this.navList[this.tabCurrentIndex].pageNum = 1;
+	onPullDownRefresh() { 
+		this.reset();
 		this.loadData('refresh');
 	},
 	//加载更多
 	onReachBottom() {
-		this.navList[this.tabCurrentIndex].pageNum = 1;
+		this.navList[this.tabCurrentIndex].pageNum += 1;
 		this.loadData('refresh');
 	},
     computed: {
@@ -158,6 +158,11 @@ export default {
 		} 
 	},
 	methods: {
+		reset () {
+			this.navList[this.tabCurrentIndex].loadingType = 'loading';
+			this.navList[this.tabCurrentIndex].orderList = [];
+			this.navList[this.tabCurrentIndex].pageNum = 1;
+		},
 		//详情
 		navToDetailPage(item) {
 			//测试数据没有写id，用title代替
