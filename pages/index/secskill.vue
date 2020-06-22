@@ -41,7 +41,8 @@
                 </view>
                 <scroll-view class="floor-list" scroll-x>
                     <view class="scoll-wrapper">
-                        <view v-for="(item, index) in item2.productList" :key="index" class="floor-item" @click="navToDetailPage(item)">
+						<!-- @click是hack写法，应该是uniapp框架转换过程有问题，导致直接写item的话找不到，因此写成item1.flashSessionInfoList[index2].productList[index1] -->
+                        <view v-for="(item, index) in item2.productList" :key="index" class="floor-item" @click="navToDetailPage(item1.flashSessionInfoList[index2].productList[index1])">
                             <image :src="item.productImg" mode="aspectFill"></image>
                             <text class="title clamp">{{ item.productName }}</text>
                             <text class="price clamp">秒杀价 ￥{{ item.flashPromotionPrice }}</text>
