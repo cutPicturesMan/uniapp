@@ -111,7 +111,7 @@
 </view>
 
 		<!-- 团购楼层 -->
-		<view class="f-header m-t" @click="navToTabPage('/pages/product/groupList')" v-if="groupHotGoodsList.length > 0">
+		<view class="f-header m-t" @click="navToTabPage('/pages/product/groupList')" v-if="groupHotGoodsList.length">
 			<image src="/static/temp/h1.png"></image>
 			<view class="tit-box">
 				<text class="tit" >精品团购</text>
@@ -119,7 +119,7 @@
 			</view>
 			<text class="yticon icon-you"></text>
 		</view>
-		<view class="group-section">
+		<view class="group-section" v-if="groupHotGoodsList.length">
 			<swiper class="g-swiper" :duration="500">
 				<swiper-item class="g-swiper-item" v-for="(item, index) in groupHotGoodsList" :key="index" v-if="index % 2 === 0" @click="navToGroupDetailPage(item)">
 					<view class="g-item left">
@@ -410,9 +410,13 @@ this.getNewProductList('refresh');
 		 * 获取团购信息
 		 */
 		async getHotGoodsList(){
-			let params = {};
-			let groupHotGoodsList = await Api.apiCall('get', Api.goods.groupHotGoodsList, params);
-			this.groupHotGoodsList = groupHotGoodsList;
+			try {
+				let params = {};
+				let groupHotGoodsList = await Api.apiCall('get', Api.goods.groupHotGoodsList, params);
+				this.groupHotGoodsList = groupHotGoodsList;
+			} catch (e) {
+				// 出错不展示
+			}
 		},
 
 		/**
@@ -524,9 +528,12 @@ this.getNewProductList('refresh');
 		},
 		//详情页
         		navToDetailPageL(url) {
+					// #ifndef H5
         			if (url) {
 						window.location.href =url;
 					}
+					// #endif
+					// TODO 小程序要加一个h5的页面
         		},
 		//详情页
         		navToCouponDetailPage(item) {
