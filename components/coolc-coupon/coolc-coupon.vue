@@ -3,7 +3,7 @@
 		<view class="coupon-money">
 			<view class="nick" ></view>
 			<view class="layof" :style="{color:theme}">￥{{item.amount}}</view>
-			<view class="end_time">{{item.endTime | formatCreateTime}}前使用</view>
+			<view class="end_time">{{item.endTime}}前使用</view>
 			<view >
 				 <view class="demand">满{{ item.minPoint }} 减 {{ item.amount }}</view>
 			</view>
