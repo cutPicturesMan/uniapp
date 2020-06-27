@@ -59,8 +59,8 @@ export default {
 	},
 	async onShow() {
 		 let params = {  };
-		 let data = await Api.apiCall('get', Api.index.userSampleInfo, params);
-		 this.userInfo=data;
+		 let data = await Api.apiCall('get', Api.member.currentMember, params);
+		 this.userInfo = data;
 		 console.log(this.userInfo);
 	},
 	async onLoad() {
