@@ -58,7 +58,7 @@ export default {
 				content: '确定要退出登录么',
 				success: e => {
 					if (e.confirm) {
-					 Api.apiCall('post', Api.index.logout, {});
+					 Api.apiCall('get', Api.index.logout, {});
 						this.logout();
 						this.$db.del('userInfo')
 						setTimeout(() => {

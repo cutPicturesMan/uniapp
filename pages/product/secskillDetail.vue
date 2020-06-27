@@ -235,7 +235,6 @@ export default {
 				item.endTimeFormat = this.dateFormat(item.endTime); 
 				return item;
 			}));
-			
 		}
 	},
 	computed: {
