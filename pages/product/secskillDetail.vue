@@ -78,7 +78,7 @@
 					<text class="con">{{ item.consultContent }}</text>
 					<view class="bot">
 						<text class="attr">购买类型：{{ item.attr }}</text>
-						<text class="time">{{ item.consultAddtime | formatCreateTime}}</text>
+						<text class="time">{{ item.consultAddtimeFormat}}</text>
 					</view>
 				</view>
 			</view>
@@ -116,7 +116,7 @@
 					<view class="con">
 						<view class="left">
 							<text class="title">{{item.name}}</text>
-							<text  class="time">在{{item.endTime | formatCreateTime}}前有效。 可领{{item.perLimit}}张</text>
+							<text  class="time">在{{item.endTimeFormat}}前有效。 可领{{item.perLimit}}张</text>
 
 						</view>
 						<view class="right">
@@ -140,6 +140,7 @@
 <script>
 import Api from '@/common/api';
 import share from '@/components/share';
+import { formatDate } from '@/common/date';
 import { mapState } from 'vuex';
 export default {
 	components: {
@@ -222,23 +223,32 @@ export default {
 			}
 			let params1 = { goodsId: ops.id };
 			let consoltL = await Api.apiCall('get', Api.goods.consultList, params1);
-			this.consultList = consoltL.list;
+			consoltL && consoltL.list && (this.consultList = consoltL.list.map(item => {
+				item.consultAddtimeFormat = this.dateFormat(item.consultAddtime);
+				return item; 
+			}));
 			this.consultCount = consoltL.count;
 
 			let params3 = { };
             let couponList1 = await Api.apiCall('get', Api.index.couponList, params3);
-            this.couponList = couponList1;
-
-
+            couponList1 && couponList1.records && (this.couponList = couponList1.records.map(item => {
+				item.endTimeFormat = this.dateFormat(item.endTime); 
+				return item;
+			}));
+			
 		}
-
-
-
 	},
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},
 	methods: {
+		dateFormat(time) {
+			if (time == null || time === '') {
+				return 'N/A';
+			}
+			let date = new Date(time);
+			return formatDate(date, 'yyyy-MM-dd hh:mm:ss');
+		},
 	toggleMask(type) {
     				let timer = type === 'show' ? 10 : 300;
     				let state = type === 'show' ? 1 : 0;

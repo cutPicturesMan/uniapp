@@ -55,29 +55,6 @@
 					<text>拍卖商品</text>
 				</view>
 			</view>
-			<view class="cate-section">
-				<view class="cate-item" @click="navToTabPage('/pages/product/groupActivityList')">
-					<image src="/static/temp/c3.png"></image>
-					<text>团购活动</text>
-				</view>
-				<view class="cate-item" @click="navToTabPage('/pages/product/groupList')">
-					<image src="/static/temp/c5.png"></image>
-					<text>拼团活动</text>
-				</view>
-				<view class="cate-item" @click="navToTabPage('/pages/product/giftList')">
-					<image src="/static/temp/c6.png"></image>
-					<text>积分商城</text>
-				</view>
-				<view class="cate-item" @click="navToTabPage('/pages/index/secskill')">
-					<image src="/static/temp/c7.png"></image>
-					<text>限时秒杀</text>
-				</view>
-				<!--去掉拍卖-->
-				<view class="cate-item" @click="navToTabPage('/pages/product/paiMaiList')" v-if="false">
-					<image src="/static/temp/c8.png"></image>
-					<text>拍卖商品</text>
-				</view>
-			</view>
 
 			<view class="ad-1">
 				<image src="/static/temp/ad1.jpg" @click="navToDetailPageL('https://s.click.taobao.com/0T59c1w')" mode="scaleToFill"></image>
@@ -87,7 +64,7 @@
 
 			<!-- 秒杀楼层 https://s.click.taobao.com/Wds7c1w -->
 			<view class="seckill-section m-t" v-if="homeFlashPromotion.flashSessionInfoList && homeFlashPromotion.flashSessionInfoList.length > 0">
-				<view class="s-header">
+				<view class="s-header"> 
 					<view class="" style="width: 80%;display: flex;flex-direction: row;align-items: center;">
 						<image class="s-img" src="/static/temp/secskill-img.jpg" mode="widthFix" @click="navToDetailPageL('https://s.click.taobao.com/Wds7c1w')"></image>
 						<text class="tip" style="margin-left: 20upx;">{{ homeFlashPromotion.flashName }}</text>
@@ -381,7 +358,10 @@
 				};
 				let data = await Api.apiCall('get', Api.index.selectNotRecive, params);
 				if (data) {
-					this.couponList = data || [];
+					this.couponList = (data || []).map(item => {
+						item.endTimeFormat = this.dateFormat(item.endTime);
+						return item;
+					});
 				}
 			},
 			/**

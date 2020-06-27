@@ -24,13 +24,14 @@
 				</view>
 			</scroll-view>
 			<!-- 右边内容 -->
-			<scroll-view scroll-y="true" class="right-wrapper" scroll-with-animation="true" :scroll-top="right_scroll" @scroll="myscroll">
+			 <!-- :scroll-top="right_scroll" @scroll="myscroll" -->
+			<scroll-view scroll-y="true" class="right-wrapper" scroll-with-animation="true">
 				<view class="right-content">
 					<!-- 产品区 -->
 					<view class="product-wrapper column with-100">
-						<view class="category-item column" :id="'list' + c_index" v-for="(c_item, c_index) in catrgoryList" :key="c_item.id">
+						<view class="category-item column" :id="'list' + c_index" v-show="c_index == select_index" v-for="(c_item, c_index) in catrgoryList" :key="c_item.id">
 							<!-- 广告图 -->
-							<view class="banner-item"><image class="banner" :src="c_item.icon == '' || c_item.icon == null ? '' : c_item.icon"></image></view>
+							<view class="banner-item" v-if="c_item.icon"><image class="banner" :src="c_item.icon == '' || c_item.icon == null ? '' : c_item.icon"></image></view>
 							<view class="category-content">
 								<view class="product-item" v-for="(p_item, p_index) in c_item.childList" :key="p_item.id" @click="toCategory(p_item)">
 									<image class="product-img" :src="p_item.icon == '' || p_item.icon == null ? '' : p_item.icon"></image>
@@ -213,7 +214,7 @@ page,
 	height: 180upx;
 	border-radius: 20upx;
 	overflow: hidden;
-	box-shadow: 0upx 5upx 20upx rgba(0, 0, 0, 0.3);
+	// box-shadow: 0upx 5upx 20upx rgba(0, 0, 0, 0.3);
 }
 .category-wrapper {
 	width: 100%;
@@ -264,6 +265,7 @@ page,
 		width: 75%;
 		background-color: #ffffff;
 		.right-content {
+			min-height: 100%;
 			width: 100%;
 			padding-top: 20rpx;
 			border-left: 1rpx solid #efefef;

@@ -239,7 +239,7 @@ export default {
 				this.favorite = data.favorite;
 				this.typeGoodsList = detailData.typeGoodsList;
 				var subImages = goods.albumPics;
-				this.desc = goods.detailHtml;
+				this.desc = (goods.detailHtml || '').replace(/\<img/gi, '<img class="richImg" ');
 				this.small = subImages.split(',');
 				//await this.$api.json('detailData');
 				let shareList = await this.$api.json('shareList');
@@ -524,6 +524,13 @@ export default {
 page {
 	background: $page-color-base;
 	padding-bottom: 160upx;
+}
+rich-text .richImg{
+  max-width: 100%;
+  max-height: 100%;
+  vertical-align: middle;
+  height: auto!important;
+  width: auto!important;
 }
 .icon-you {
 	font-size: $font-base + 2upx;
